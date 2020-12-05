@@ -30,8 +30,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'User_Password',
-        'User_token',
+//        'User_Password',
+//        'User_token',
     ];
 
     /**
@@ -42,4 +42,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function toArray()
+    {
+        return [
+            'PkUser_id' => $this->PkUser_id,
+            'User_Password' => $this->User_Password,
+            'User_Token' => $this->User_token
+        ];
+    }
+
+    static public function checkToken($token)
+    {
+        return User::where('User_token', $token)->get()->first() != null;
+    }
 }
