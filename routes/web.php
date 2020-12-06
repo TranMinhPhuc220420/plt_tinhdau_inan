@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EssentialOilCategoryController;
 use App\Http\Controllers\EssentialOilTypeController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\EssentialOilCategory;
@@ -42,8 +43,13 @@ Route::prefix('/admin')->group(function () {
         Route::post('/essential-oil/type-product/edit', [EssentialOilTypeController::class, 'edit'])->name('editEssentialOiTypeProduct');
         Route::post('/essential-oil/type-product/delete', [EssentialOilTypeController::class, 'delete'])->name('deleteEssentialOiTypeProduct');
         Route::get('/essential-oil/type-product/get-all', [EssentialOilTypeController::class, 'getAll'])->name('getAllEssentialOiTypeProduct');
+
         /*------- For 'Category Product' -------*/
         Route::get('/essential-oil/category-product', [AdminController::class, 'index'])->name('essentialOiCategoryProduct');
+        Route::post('/essential-oil/category-product/add', [EssentialOilCategoryController::class, 'store'])->name('addEssentialOiCategoryProduct');
+        Route::get('/essential-oil/category-product/get-all', [EssentialOilCategoryController::class, 'getAll'])->name('getAllEssentialOiCategoryProduct');
+        Route::post('/essential-oil/category-product/delete', [EssentialOilCategoryController::class, 'delete'])->name('deleteEssentialOiCategoryProduct');
+        Route::post('/essential-oil/category-product/edit', [EssentialOilCategoryController::class, 'edit'])->name('editEssentialOiCategoryProduct');
     });
 });
 

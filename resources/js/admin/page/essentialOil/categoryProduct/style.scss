@@ -1,0 +1,14 @@
+.content{
+  min-height: 74vh;
+}
+
+#gridViewCategoryProduct {
+  .td-center {
+    text-align: center;
+
+    a.badge {
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  }
+}

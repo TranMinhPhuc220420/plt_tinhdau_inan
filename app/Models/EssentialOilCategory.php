@@ -24,7 +24,7 @@ class EssentialOilCategory extends Model
             'id' => $this->id,
             'EssentialOilCategory_Name' => $this->EssentialOilCategory_Name,
             'essential_oil_types_id' => $this->essential_oil_types_id,
-            'EssentialOilCategory_CreatedaAt' => $this->created_at,
+            'EssentialOilCategory_CreatedAt' => $this->created_at,
             'EssentialOilCategory_UpdateAt' => $this->updated_at
         ];
     }
