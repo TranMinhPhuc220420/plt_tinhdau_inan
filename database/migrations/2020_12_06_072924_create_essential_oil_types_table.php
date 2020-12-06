@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateEssentialOilTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('essential_oil_types', function (Blueprint $table) {
             $table->id();
-            $table->string('User_Username');
-            $table->string('User_Password');
-            $table->string('User_FullName');
-            $table->boolean('User_IsAdmin');
-            $table->string('User_token');
-            $table->string('User_Email');
+            $table->string('EssentialOilType_Name');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('essential_oil_types');
     }
 }

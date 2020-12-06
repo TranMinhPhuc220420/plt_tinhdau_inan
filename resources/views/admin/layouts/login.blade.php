@@ -313,10 +313,6 @@
         }
 
     </style>
-
-    <script>
-        const loginFail = {{ $dataResponse['loginFail'] ? 'true' : ''  }}
-    </script>
 </head>
 
 <body>
@@ -332,10 +328,10 @@
         </div>
 
         <!-- Login Form -->
-        <form action="{{ route('adminLogin') }}" method="POST">
+        <form id="formLogin" action="{{ route('adminLogin') }}" method="POST">
             @csrf
-            <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
-            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+            <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username" require>
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" require>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="remember_token" name="remember">
                 <label class="form-check-label" for="remember_token">Ghi nhớ đăng nhập</label>
@@ -356,14 +352,21 @@
 <script type="text/javascript" src="{{ asset('/dist/fontawesome-free-5.15.1-web/js/all.min.js')  }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script !src="">
-  if (loginFail) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-      footer: '<a href>Why do I have this issue?</a>'
-    })
-  }
+  document.getElementById('formLogin').addEventListener('submit', (event) => {
+    let username = document.getElementById('login').value;
+    let password = document.getElementById('password').value;
+
+    username = username.trim();
+    password = password.trim();
+    if(username === '' || password === ''){
+      event.preventDefault();
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi đăng nhập',
+        text: 'Vui lòng nhập đầy đủ thông tin đăng nhập!',
+      });
+    }
+  });
 </script>
 </body>
 </html>

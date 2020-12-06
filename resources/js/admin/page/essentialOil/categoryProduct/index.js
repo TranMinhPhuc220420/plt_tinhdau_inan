@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
-const TypeProduct = () => {
+import './style.scss'
+
+const EssentialOilCategoryProduct = props => {
   return (
     <div className="content-wrapper">
       <div className="content-header">
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-12">
-              <h1 className="m-0">Loại sản phẩm</h1>
+              <h1 className="m-0">Thể loại sản phẩm</h1>
             </div>
           </div>
         </div>
@@ -18,7 +22,23 @@ const TypeProduct = () => {
           <div className="row">
 
             <div className="col-md-4">
+              <div className="card card-primary">
+                <div className="card-header">
+                  <h3 className="card-title">Thêm thể loại sản phẩm</h3>
+                </div>
+                <form method="POST">
+                  <div className="card-body">
+                    <div className="form-group">
+                      <label htmlFor="essentialOilCategory_Name">Tên loại sản phẩm thêm</label>
+                      <input type="text" className="form-control" id="essentialOilCategory_Name" placeholder="Tên loại sản phẩm muốn thêm..." />
+                    </div>
+                  </div>
 
+                  <div className="card-footer">
+                    <button type="submit" className="btn btn-primary">Thêm</button>
+                  </div>
+                </form>
+              </div>
             </div>
 
 
@@ -39,29 +59,18 @@ const TypeProduct = () => {
 
                 <div className="card-body p-0">
                   <div className="table-responsive">
-                    <table className="table m-0">
+                    <table className="table m-0" id="gridViewCategoryProduct">
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Tên loại</th>
-                          <th>Số lượng sản phẩm</th>
-                          <th>Ngày thêm</th>
+
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                          <td>Call of Duty IV</td>
-                          <td><span className="badge badge-success">22</span></td>
-                          <td>
-                            20-20-2020
-                          </td>
-                        </tr>
+
                       </tbody>
                     </table>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -69,7 +78,7 @@ const TypeProduct = () => {
         </div>
       </section>
     </div>
-  )
-};
+  );
+}
 
-export default TypeProduct;
+export default EssentialOilCategoryProduct;

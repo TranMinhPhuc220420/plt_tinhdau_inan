@@ -40,14 +40,14 @@ class AdminController extends Controller
     {
         $user = new User();
         $token = new Token();
-        $user->PkUser_id = time();
+        $user->id = time();
         $user->User_Username = 'test';
         $user->User_Password = Hash::make('123_zxc');
         $user->User_FullName = 'Trần Minh Hoàng Test';
         $user->User_IsAdmin = true;
         $user->User_token = $token->randomString(100);
         $user->User_Email = 'test@plt.com.vn';
-//        $user->save();
+        $user->save();
     }
 
     /**

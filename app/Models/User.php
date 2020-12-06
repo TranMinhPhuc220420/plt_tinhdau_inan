@@ -46,7 +46,7 @@ class User extends Authenticatable
     public function toArray()
     {
         return [
-            'PkUser_id' => $this->PkUser_id,
+            'id' => $this->id,
             'User_Password' => $this->User_Password,
             'User_Token' => $this->User_token
         ];
