@@ -25,6 +25,11 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "@editorjs/editorjs": "^2.19.0",
+        "@editorjs/embed": "^2.4.0",
+        "@editorjs/header": "^2.6.1",
+        "@editorjs/list": "^1.6.1",
+        "jodit-react": "^1.0.66",
         "react-router-dom": "^5.2.0",
         "sweetalert2": "^10.11.1"
     }

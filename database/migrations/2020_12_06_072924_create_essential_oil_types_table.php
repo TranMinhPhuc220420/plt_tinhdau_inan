@@ -16,6 +16,7 @@ class CreateEssentialOilTypesTable extends Migration
         Schema::create('essential_oil_types', function (Blueprint $table) {
             $table->id();
             $table->string('EssentialOilType_Name');
+            $table->string('EssentialOilType_Image');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class EssentialOilCategoryController extends Controller
         DB::table('essential_oil_categories')->insert([
             'id' => time(),
             'EssentialOilCategory_Name' => $EssentialOilCategory_Name,
-            'essential_oil_types_id' => $EssentialOilType_id,
+            'FkEssentialOilType_id' => $EssentialOilType_id,
             'created_at' => $dateCreate,
             'updated_at' => $dateCreate,
         ]);
@@ -32,13 +32,13 @@ class EssentialOilCategoryController extends Controller
             ->select([
                 'essential_oil_categories.id',
                 'essential_oil_categories.EssentialOilCategory_Name',
-                'essential_oil_categories.essential_oil_types_id',
+                'essential_oil_categories.FkEssentialOilType_id',
                 'essential_oil_categories.created_at',
                 'essential_oil_categories.updated_at',
                 'essential_oil_types.EssentialOilType_Name',
             ])
             ->join('essential_oil_types',
-                'essential_oil_categories.essential_oil_types_id',
+                'essential_oil_categories.FkEssentialOilType_id',
                 '=',
                 'essential_oil_types.id')
             ->get();
@@ -47,9 +47,28 @@ class EssentialOilCategoryController extends Controller
     }
 
     public function delete(Request $request){
-        DB::table($this->nameTable)->where('id', '=', $request->get('id'))->delete();
+        $idDelete = $request->get('id');
+        $response = [
+            'status' => 200,
+            'message' => ''
+        ];
 
-        echo json_encode(['status' => 200, 'message' => 'ok']);
+
+        $categoryHasThisID = DB::table('essential_oil_products')
+            ->where(
+                'FkEssentialOilCategory_id',
+                '=',
+                $idDelete
+            )
+            ->get()->count();
+
+        if ($categoryHasThisID == 0) {
+            DB::table($this->nameTable)->where('id', '=', $idDelete)->delete();
+        } else {
+            $response['status'] = 303;
+        }
+
+        echo json_encode($response);
     }
 
     public function edit(Request $request){
@@ -62,7 +81,7 @@ class EssentialOilCategoryController extends Controller
             ->update(
                 [
                     'EssentialOilCategory_Name' => $nameChange,
-                    'essential_oil_types_id' => $typeProduct_idChange
+                    'FkEssentialOilType_id' => $typeProduct_idChange
                 ]
             );
 

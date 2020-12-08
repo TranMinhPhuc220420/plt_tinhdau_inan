@@ -62,4 +62,14 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script> -->
+
+    <script !src="">
+      $(function () {
+        document.getElementById('sidebar-overlay').addEventListener('click', function () {
+          document.getElementsByTagName('body')[0].classList.remove('sidebar-open');
+          document.getElementsByTagName('body')[0].classList.add('sidebar-closed');
+          document.getElementsByTagName('body')[0].classList.add('sidebar-collapse');
+        })
+      })
+    </script>
 @endsection

@@ -15,6 +15,7 @@ class EssentialOilType extends Model
      */
     protected $fillable = [
         'EssentialOilType_Name',
+        'EssentialOilType_Image',
     ];
 
     protected $guarded = [];
@@ -24,12 +25,13 @@ class EssentialOilType extends Model
         return [
             'id' => $this->id,
             'EssentialOilType_Name' => $this->EssentialOilType_Name,
+            'EssentialOilType_Image' => $this->EssentialOilType_Image,
             'EssentialOilType_CreatedaAt' => $this->created_at,
-            'EssentialOilType_UpdateAt' => $this->updated_at
+            'EssentialOilType_UpdateAt' => $this->updated_at,
         ];
     }
 
     public function essentialOilCategory(){
-        return $this->hasMany(EssentialOilCategory::class, 'essential_oil_types_id');
+        return $this->hasMany(EssentialOilCategory::class, 'FkEssentialOilType_id');
     }
 }

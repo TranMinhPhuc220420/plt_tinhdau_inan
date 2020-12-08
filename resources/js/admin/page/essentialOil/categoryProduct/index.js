@@ -78,16 +78,26 @@ const EssentialOilCategoryProduct = () => {
 
         CategoryProductController.delete(data, (result) => {
           if (result.status == 200) {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Xoá thành công! 😉',
-              showConfirmButton: false,
-              timer: 900
-            });
-            // getData(false); //get new data
-            setTookCategoryProduct(false);
-
+            if (result.data.status != 303) {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Xoá thành công! 😉',
+                showConfirmButton: false,
+                timer: 900
+              });
+              // getData(false); //get new data
+              setTookCategoryProduct(false);
+            } else {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Xoá thất bại! 😥',
+                text: 'Đang có sản phẩm sử dụng loại này',
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
           } else {
             Swal.fire({
               icon: 'error',
@@ -229,7 +239,7 @@ const EssentialOilCategoryProduct = () => {
                         defaultValue='null'
                         onChange={(event) => setDataNewCategoryProduct({ name: dataNewCategoryProduct.name, typeProduct_id: event.target.value })}
                       >
-                        <option value="null" disabled> Choose a salutation ...</option>
+                        <option value="null" disabled> Chọn thể loại sản phẩm ...</option>
                         {dataTypeProduct.map((item, index) => (
                           <option key={index} value={item.id}> {item.EssentialOilType_Name} </option>
                         ))}
@@ -268,7 +278,7 @@ const EssentialOilCategoryProduct = () => {
                           <th>ID</th>
                           <th>Tên loại</th>
                           <th>Thể loại</th>
-                          <th>Số lượng sản phẩm có</th>
+                          <th>Số lượng</th>
                           <th>Ngày thêm</th>
                           <th></th>
                           <th></th>

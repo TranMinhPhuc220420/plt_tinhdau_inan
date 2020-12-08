@@ -23,13 +23,13 @@ class EssentialOilCategory extends Model
         return [
             'id' => $this->id,
             'EssentialOilCategory_Name' => $this->EssentialOilCategory_Name,
-            'essential_oil_types_id' => $this->essential_oil_types_id,
+            'FkEssentialOilType_id' => $this->FkEssentialOilType_id,
             'EssentialOilCategory_CreatedAt' => $this->created_at,
             'EssentialOilCategory_UpdateAt' => $this->updated_at
         ];
     }
 
     public function essentialOilType() {
-        return $this->belongsTo(EssentialOilType::class, 'essential_oil_types_id');
+        return $this->belongsTo(EssentialOilType::class, 'FkEssentialOilType_id');
     }
 }

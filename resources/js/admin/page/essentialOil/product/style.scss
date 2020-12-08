@@ -1,0 +1,19 @@
+#gridViewProduct {
+  tbody {
+    tr {
+      cursor: pointer;
+      transition: 0.75s all;
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
+
+      td {
+        vertical-align: inherit;
+        img.img {
+          width: 80px;
+        }
+      }
+    }
+  }
+}

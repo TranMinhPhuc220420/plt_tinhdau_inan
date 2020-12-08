@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -6,6 +7,10 @@ import './style.scss'
 
 const EssentialOilTypeProduct = () => {
   const [nameTypeProduct, setNameTypeProduct] = useState('');
+  const [fileTypeProduct, setFileTypeProduct] = useState({
+    urlTemp: '',
+    file: null
+  });
   const [dataTypeProduct, setDataTypeProduct] = useState([]);
   const [tookData, setTookData] = useState(false);
 
@@ -14,10 +19,10 @@ const EssentialOilTypeProduct = () => {
     event.preventDefault();
     nameTypeProduct.trim();
 
-    if (nameTypeProduct != '') {
-      let data = {
-        name: nameTypeProduct
-      };
+    if (nameTypeProduct != '' && fileTypeProduct.file != null) {
+      let data = new FormData();
+      data.append('fileImage', fileTypeProduct.file);
+      data.append('name', nameTypeProduct);
 
       axios.post('/admin/essential-oil/type-product/add', data)
         .then(response => {
@@ -30,6 +35,10 @@ const EssentialOilTypeProduct = () => {
               timer: 1000
             });
             setNameTypeProduct(''); //refresh input
+            setFileTypeProduct({
+              urlTemp: '',
+              file: null
+            });
             // getData(false); //get new data
             setTookData(false);
           }
@@ -129,15 +138,23 @@ const EssentialOilTypeProduct = () => {
 
         return axios.post('/admin/essential-oil/type-product/delete', data)
           .then(response => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Xoá thành công! 😉',
-              showConfirmButton: false,
-              timer: 900
-            });
-            // getData(false); //get new data
-            setTookData(false);
+            if (response.data.status == 303) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Không thể xoá 😥',
+                text: 'Thể loại sản phẩm này đang được sử dụng, vui lòng kiểm tra lại loại sản phẩm!',
+              });
+            } else {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Xoá thành công! 😉',
+                showConfirmButton: false,
+                timer: 900
+              });
+              // getData(false); //get new data
+              setTookData(false);
+            }
           })
           .catch(error => {
             Swal.fire({
@@ -178,13 +195,37 @@ const EssentialOilTypeProduct = () => {
                 <div className="card-header">
                   <h3 className="card-title">Thêm thể loại sản phẩm</h3>
                 </div>
-                <form method="POST" onSubmit={actionAdd}>
+                <form method="POST" onSubmit={actionAdd} encType="multipart/form-data">
                   <div className="card-body">
                     <div className="form-group">
                       <label htmlFor="essentialOilType_Name">Tên thể loại sản phẩm thêm</label>
                       <input type="text" className="form-control" id="essentialOilType_Name" placeholder="Tên thể loại sản phẩm muốn thêm..."
                         value={nameTypeProduct}
                         onChange={(event) => setNameTypeProduct(event.target.value)} />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="fileImage">Hình ảnh mô tả</label>
+                      <div className="input-group">
+                        <div className="custom-file">
+                          <input type="file" className="custom-file-input" id="fileImage"
+                            accept="image/png, image/jpeg"
+                            onChange={(event) => {
+                              setFileTypeProduct({
+                                file: event.target.files[0],
+                                urlTemp: (window.URL || window.webkitURL).createObjectURL(event.target.files[0])
+                              });
+
+                              event.target.files = null;
+                            }} />
+                          <label className="custom-file-label" htmlFor="fileImage">Choose file</label>
+                        </div>
+
+                      </div>
+                      <img className="img-type-demo" src={fileTypeProduct.urlTemp}
+                        style={{ width: '70px', marginTop: '10px' }}
+                      />
+
                     </div>
                   </div>
 
@@ -205,9 +246,6 @@ const EssentialOilTypeProduct = () => {
                     <button type="button" className="btn btn-tool" data-card-widget="collapse">
                       <i className="fas fa-minus"></i>
                     </button>
-                    {/* <button type="button" className="btn btn-tool" data-card-widget="remove">
-                      <i className="fas fa-times"></i>
-                    </button> */}
                   </div>
                 </div>
 
@@ -218,7 +256,7 @@ const EssentialOilTypeProduct = () => {
                         <tr>
                           <th>ID</th>
                           <th>Tên loại</th>
-                          <th>Số lượng loại sản phẩm</th>
+                          <th>Hình mô tả</th>
                           <th>Ngày thêm</th>
                           <th></th>
                           <th></th>
@@ -229,8 +267,8 @@ const EssentialOilTypeProduct = () => {
                           <tr key={item.id}>
                             <td> <a href="#">{item.id}</a> </td>
                             <td> {item.EssentialOilType_Name} </td>
-                            <td> <span className="badge badge-success">0</span> </td>
-                            <td> {formatDate(item.EssentialOilType_UpdateAt)} </td>
+                            <td> <img style={{ width: 100 }} src={`/image/essential-oil/type/${item.EssentialOilType_Image}`} /> </td>
+                            <td> {formatDate(item.created_at)} </td>
                             <td className="td-center">
                               <a className="badge badge-success"
                                 onClick={() => alertBoxEdit(item)} // Click edit
