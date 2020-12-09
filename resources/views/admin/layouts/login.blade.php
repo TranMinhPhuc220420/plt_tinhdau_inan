@@ -324,7 +324,7 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="{{ asset('./images/logo.jpg') }}" class="logo-img" alt="User Icon"/>
+            <img src="{{ asset('./images/logo-eva-vn-large.jpg') }}" class="logo-img" alt="User Icon"/>
         </div>
 
         <!-- Login Form -->

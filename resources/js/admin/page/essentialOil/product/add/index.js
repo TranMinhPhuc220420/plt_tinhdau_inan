@@ -39,8 +39,8 @@ const EssentialOilProductPanelAdd = (props) => {
     data.append('priceProduct', priceProduct);
     data.append('discountProduct', discountProduct);
     data.append('sapoProduct', sapoProduct);
-    data.append('description', description);
-    data.append('information', information);
+    data.append('description', description ? description : 'Mô tả chi tiết sản phẩm trống');
+    data.append('information', information ? information : 'Thông tin thành phần sản phẩm trống');
 
     EssentialOilProductController.add(data, (result) => {
       if (result.status === 202) {

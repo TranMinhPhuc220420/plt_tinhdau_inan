@@ -64,6 +64,7 @@ class EssentialOilTypeController extends Controller
         if($categoryHasThisID == 0){
             $typeDelete = EssentialOilType::where('id', $id)->first();
             $typeDelete->delete();
+            Storage::deleteDirectory('public/images/essential-oil/type/' . $id);
         }else{
             $response['status'] = 303;
         }

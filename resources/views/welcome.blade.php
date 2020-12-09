@@ -64,8 +64,7 @@
                         <div class="card text-left">
                             <a href="./tinh-dau" class="card-body hyperlink">
                                 <img src="{{ asset('images/hyperlink-1.jpg') }}" alt="">
-                                <p class="card-text">TINH DẦU <span class="count-product">(20)</span></p>
-                                {{-- <p class="card-text">TINH DẦU</p> --}}
+                                <p class="card-text">TINH DẦU</p>
                             </a>
                         </div>
                     </div>
@@ -74,7 +73,6 @@
                         <div class="card text-left">
                             <a href="./in-an" class="card-body hyperlink">
                                 <img src="{{ asset('images/hyperlink-inan.jpg') }}" alt="">
-                                <!-- <p class="card-text">Children <span class="count-product">(50)</span></p> -->
                                 <p class="card-text">IN ẤN</p>
                             </a>
                         </div>

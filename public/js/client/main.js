@@ -11,9 +11,6 @@ $('#btnCheckCart')[0].addEventListener('click', (event) => {
 $('#btnCollapseNav')[0].addEventListener('click', (event) => {
   $('.navbar .nav-right').toggleClass('show');
 });
-$('.mobile-menu-overlay')[0].addEventListener('click', (event) => {
-  $('.navbar .nav-right').removeClass('show');
-});
 
 
 function handler(event) {

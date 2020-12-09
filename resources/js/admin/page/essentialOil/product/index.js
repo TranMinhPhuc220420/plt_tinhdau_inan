@@ -46,9 +46,27 @@ const EssentialOilProduct = props => {
           <div className="row">
 
             <div className="col-md-12">
+              <div className="card collapsed-card">
+                <div className="card-header border-transparent">
+                  <h3 className="card-title">Form tìm kiếm sản phẩm</h3>
+
+                  <div className="card-tools">
+                    <button type="button" className="btn btn-tool" data-card-widget="collapse">
+                      <i className="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="card-body p-0">
+                  
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-12">
               <div className="card">
                 <div className="card-header border-transparent">
-                  <h3 className="card-title">Danh sách sản phẩm</h3>
+                  <h2 className="card-title">Danh sách sản phẩm</h2>
 
                   <div className="card-tools">
                     <Link to="/admin/essential-oil/product-add" className="btn btn-success">
@@ -82,7 +100,7 @@ const EssentialOilProduct = props => {
                             <td> {item.EssentialOilProduct_Price} </td>
                             <td> {item.EssentialOilProduct_Discount} </td>
                             <td>
-                              <img className="img" src={`/image/essential-oil/product/${item.product_id}/${JSON.parse(item.EssentialOilProduct_ListImage)[0].idImage}`}/>
+                              <img className="img" src={`/image/essential-oil/product/${item.product_id}/${JSON.parse(item.EssentialOilProduct_ListImage)[0].idImage}`} />
                             </td>
                             <td> {formatDate(item.created_at)} </td>
                           </tr>

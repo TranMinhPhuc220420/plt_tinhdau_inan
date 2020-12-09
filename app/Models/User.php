@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -54,6 +55,9 @@ class User extends Authenticatable
 
     static public function checkToken($token)
     {
-        return User::where('User_token', $token)->get()->first() != null;
+        $useCheck = DB::table('users')
+            ->where('users.User_token', '=', $token)
+            ->get()->first();
+        return $useCheck != null && $useCheck->User_IsAdmin == 1;
     }
 }

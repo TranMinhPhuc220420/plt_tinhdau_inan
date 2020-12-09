@@ -15,7 +15,7 @@ const EssentialOilProductPanelEdit = ({ history, match }) => {
   //Set data
   const { state } = useLocation();
   if (state == null) {
-    // window.location.href = '/admin/essential-oil/product';
+    window.location.href = '/admin/essential-oil/product';
   }
 
   const [nameProduct, setNameProduct] = useState(state.EssentialOilProduct_Name);
@@ -93,6 +93,51 @@ const EssentialOilProductPanelEdit = ({ history, match }) => {
       }
     });
 
+  };
+
+  const actionDelete = () => {
+    Swal.fire({
+      title: 'Xoá sản phẩm',
+      text: "Bạn có chắc là muốn xoá không? 🤔",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ok, xoá nó đi'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let data = {
+          product_id: state.product_id
+        }
+
+        EssentialOilProductController.delete(data, (result) => {
+          if (result.status === 202) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Không tìm thấy id của sản phẩm cần xoá',
+            });
+          }
+          if (result.status === 303) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi phía máy chủ!',
+            });
+          }
+          if ((result.status === 200)) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Xoá thành công! 😉',
+              showConfirmButton: false,
+              timer: 1000
+            }).then(() => {
+              window.location.href = '/admin/essential-oil/product';
+            });
+          }
+        });
+
+      }
+    })
   };
 
   useEffect(() => {
@@ -312,8 +357,13 @@ const EssentialOilProductPanelEdit = ({ history, match }) => {
                   </div>
 
                   <div className="card-footer">
-                    <button type="submit" className="btn btn-primary mr-3">Cập nhật thông tin</button>
-                    <Link to="/admin/essential-oil/product" className="btn btn-danger">Huỷ bỏ</Link>
+                    <div className="left">
+                      <button type="submit" className="btn btn-success mr-3"> <i class="far fa-edit"></i> Cập nhật thông tin</button>
+                      <Link to="/admin/essential-oil/product" className="btn btn-primary">Huỷ thao tác</Link>
+                    </div>
+                    <div className="right">
+                      <button type="button" className="btn btn-danger" onClick={actionDelete} > <i class="fas fa-trash"></i> Xoá sản phẩm</button>
+                    </div>
                   </div>
                 </form>
               </div>

@@ -32,7 +32,7 @@
             <div class="nav-link">
                 <ul class="list-link">
                     <li class="item pos-re hv-lb">
-                        <a href="#" class="link">Trang chủ</a>
+                        <a href="/tinh-dau" class="link">Trang chủ</a>
                     </li>
 
                     <li class="item pos-re hv-lb">
@@ -115,7 +115,6 @@
 
                 </div>
             </div>
-            <div class="mobile-menu-overlay"></div>
         </div>
     </div>
 </nav>

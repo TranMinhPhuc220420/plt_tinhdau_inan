@@ -214,4 +214,17 @@ class EssentialOilProductController extends Controller
 
         echo json_encode(['status' => 200, 'message' => 'ok']);
     }
+
+  public function delete(Request $request)
+  {
+    $idDelete = $request->get('product_id');
+
+    if ($idDelete) {
+      DB::table('essential_oil_products')->where('id', '=', $idDelete)->delete();
+      Storage::deleteDirectory('public/images/essential-oil/product/' . $idDelete);
+      echo json_encode(['status' => 200, 'message' => 'ok']);
+    }else{
+      echo json_encode(['status' => 303, 'message' => 'ok']);
+    }
+  }
 }

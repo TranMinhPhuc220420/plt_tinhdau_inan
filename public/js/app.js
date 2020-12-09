@@ -2043,7 +2043,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "#formEditNewProductEssentialOil .card-body .file-image .card-columns .card {\n  position: relative;\n}\n#formEditNewProductEssentialOil .card-body .file-image .card-columns .card button.btn-remove {\n  position: absolute;\n  right: 0;\n  top: 0;\n  transition: 0.25s all;\n  font-size: 15px;\n}", ""]);
+exports.push([module.i, "#formEditNewProductEssentialOil .card-body .file-image .card-columns .card {\n  position: relative;\n}\n#formEditNewProductEssentialOil .card-body .file-image .card-columns .card button.btn-remove {\n  position: absolute;\n  right: 0;\n  top: 0;\n  transition: 0.25s all;\n  font-size: 15px;\n}\n#formEditNewProductEssentialOil .card-footer .left {\n  float: left;\n}\n#formEditNewProductEssentialOil .card-footer .right {\n  float: right;\n}", ""]);
 
 // exports
 
@@ -2081,7 +2081,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".content {\n  min-height: 74vh;\n}\n\n#gridViewTypeProduct .td-center {\n  text-align: center;\n}\n#gridViewTypeProduct .td-center a.badge {\n  cursor: pointer;\n  font-size: 1rem;\n}", ""]);
+exports.push([module.i, ".card-header.form-search .card-form-search {\n  float: left;\n}\n\n.content {\n  min-height: 74vh;\n}\n\n#gridViewTypeProduct .td-center {\n  text-align: center;\n}\n#gridViewTypeProduct .td-center a.badge {\n  cursor: pointer;\n  font-size: 1rem;\n}", ""]);
 
 // exports
 
@@ -39167,6 +39167,13 @@ var NavLeft = function NavLeft() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#",
+    className: "nav-link"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-cog"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "C\xE0i \u0111\u1EB7t"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "/admin/logout",
     className: "nav-link"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -39397,6 +39404,15 @@ var EssentialOilProductController = {
   },
   getAll: function getAll(callback) {
     _model_EssentialOil_product__WEBPACK_IMPORTED_MODULE_0__["default"].getData(callback);
+  },
+  "delete": function _delete(data, callback) {
+    if (data.product_id == null || data.product_id == '') {
+      callback({
+        status: 303
+      });
+    } else {
+      _model_EssentialOil_product__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](data, callback);
+    }
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (EssentialOilProductController);
@@ -39534,7 +39550,17 @@ var EssentialOilCategoryProductModel = {
       });
     });
   },
-  "delete": function _delete(data, callback) {},
+  "delete": function _delete(data, callback) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/admin/essential-oil/product/delete', data).then(function (response) {
+      callback({
+        status: 200
+      });
+    })["catch"](function (error) {
+      callback({
+        status: 303
+      });
+    });
+  },
   edit: function edit(data, callback) {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/admin/essential-oil/product/edit/sub-edit', data, {
       headers: {
@@ -40097,8 +40123,8 @@ var EssentialOilProductPanelAdd = function EssentialOilProductPanelAdd(props) {
     data.append('priceProduct', priceProduct);
     data.append('discountProduct', discountProduct);
     data.append('sapoProduct', sapoProduct);
-    data.append('description', description);
-    data.append('information', information);
+    data.append('description', description ? description : 'Mô tả chi tiết sản phẩm trống');
+    data.append('information', information ? information : 'Thông tin thành phần sản phẩm trống');
     _controller_EssentialOil_product__WEBPACK_IMPORTED_MODULE_4__["default"].add(data, function (result) {
       if (result.status === 202) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
@@ -40460,7 +40486,8 @@ var EssentialOilProductPanelEdit = function EssentialOilProductPanelEdit(_ref) {
   var _useLocation = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useLocation"])(),
       state = _useLocation.state;
 
-  if (state == null) {// window.location.href = '/admin/essential-oil/product';
+  if (state == null) {
+    window.location.href = '/admin/essential-oil/product';
   }
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(state.EssentialOilProduct_Name),
@@ -40578,6 +40605,51 @@ var EssentialOilProductPanelEdit = function EssentialOilProductPanelEdit(_ref) {
           listOld: []
         });
         document.getElementById('selectCategoryProduct').value = 'null';
+      }
+    });
+  };
+
+  var actionDelete = function actionDelete() {
+    sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+      title: 'Xoá sản phẩm',
+      text: "Bạn có chắc là muốn xoá không? 🤔",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ok, xoá nó đi'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        var data = {
+          product_id: state.product_id
+        };
+        _controller_EssentialOil_product__WEBPACK_IMPORTED_MODULE_6__["default"]["delete"](data, function (result) {
+          if (result.status === 202) {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+              icon: 'error',
+              title: 'Không tìm thấy id của sản phẩm cần xoá'
+            });
+          }
+
+          if (result.status === 303) {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+              icon: 'error',
+              title: 'Lỗi phía máy chủ!'
+            });
+          }
+
+          if (result.status === 200) {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Xoá thành công! 😉',
+              showConfirmButton: false,
+              timer: 1000
+            }).then(function () {
+              window.location.href = '/admin/essential-oil/product';
+            });
+          }
+        });
       }
     });
   };
@@ -40843,13 +40915,25 @@ var EssentialOilProductPanelEdit = function EssentialOilProductPanelEdit(_ref) {
     }));
   })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
-    className: "btn btn-primary mr-3"
-  }, "C\u1EADp nh\u1EADt th\xF4ng tin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    className: "btn btn-success mr-3"
+  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    "class": "far fa-edit"
+  }), " C\u1EADp nh\u1EADt th\xF4ng tin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/admin/essential-oil/product",
-    className: "btn btn-danger"
-  }, "Hu\u1EF7 b\u1ECF")))))))));
+    className: "btn btn-primary"
+  }, "Hu\u1EF7 thao t\xE1c")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "right"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-danger",
+    onClick: actionDelete
+  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    "class": "fas fa-trash"
+  }), " Xo\xE1 s\u1EA3n ph\u1EA9m"))))))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (EssentialOilProductPanelEdit);
@@ -40969,10 +41053,28 @@ var EssentialOilProduct = function EssentialOilProduct(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-12"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
+    className: "card collapsed-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-header border-transparent"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "card-title"
+  }, "Form t\xECm ki\u1EBFm s\u1EA3n ph\u1EA9m"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card-tools"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-tool",
+    "data-card-widget": "collapse"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-minus"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card-body p-0"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card-header border-transparent"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "card-title"
   }, "Danh s\xE1ch s\u1EA3n ph\u1EA9m"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-tools"

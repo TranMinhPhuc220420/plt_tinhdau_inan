@@ -43,7 +43,15 @@ const EssentialOilProductController = {
 
   getAll: (callback) => {
     EssentialOilCategoryProductModel.getData(callback);
-  }
+  },
+
+  delete: (data, callback) => {
+    if (data.product_id == null || data.product_id == '') {
+      callback({ status: 303})
+    } else {
+      EssentialOilCategoryProductModel.delete(data, callback);
+    }
+  },
 };
 
 export default EssentialOilProductController;

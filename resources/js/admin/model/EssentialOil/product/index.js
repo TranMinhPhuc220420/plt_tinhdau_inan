@@ -30,7 +30,13 @@ const EssentialOilCategoryProductModel = {
   },
 
   delete: (data, callback) => {
-
+    axios.post('/admin/essential-oil/product/delete', data)
+      .then((response) => {
+        callback({ status: 200 });
+      })
+      .catch(error => {
+        callback({ status: 303 })
+      });
   },
 
   edit: (data, callback) => {

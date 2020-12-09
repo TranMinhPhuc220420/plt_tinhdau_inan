@@ -94,6 +94,13 @@ const NavLeft = () => {
             ))}
 
             <li className="nav-item">
+              <a href='#' className="nav-link">
+              <i className="fas fa-cog"></i>
+                <p>Cài đặt</p>
+              </a>
+            </li>
+
+            <li className="nav-item">
               <a href='/admin/logout' className="nav-link">
                 <i className="fas fa-sign-out-alt" />
                 <p>Đăng xuất</p>

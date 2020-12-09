@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EssentialOilCategoryController;
 use App\Http\Controllers\EssentialOilProductController;
@@ -36,14 +36,18 @@ Route::prefix('/tinh-dau')->group(function () {
                 'essential_oil_categories.id',
                 '=',
                 'essential_oil_products.FkEssentialOilCategory_id')
+            ->limit(9)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $dataProductDiscount = DB::table('essential_oil_products')
             ->select()
             ->where('EssentialOilProduct_Discount', '>', 0)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $dataCategory = DB::table('essential_oil_types')
+            ->orderBy('created_at', 'desc')
             ->select()
             ->get();
 
@@ -68,11 +72,9 @@ Route::prefix('/tinh-dau')->group(function () {
 
         $dataProductSem = DB::table('essential_oil_products')
             ->select()
-            ->join('essential_oil_categories',
-                'essential_oil_categories.id',
-                '=',
-                'essential_oil_products.FkEssentialOilCategory_id')
+            ->orderBy('created_at', 'desc')
             ->where('essential_oil_products.FkEssentialOilCategory_id', '=', $data->FkEssentialOilCategory_id)
+            ->where('essential_oil_products.id', '<>', $id)
             ->get();
 
         $idProduct = $id;
@@ -99,7 +101,6 @@ Route::prefix('/admin')->group(function () {
      * Router middleware for Admin
      * */
     Route::middleware([IsAdmin::class])->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('helloAdmin');
         Route::get('/home', [AdminController::class, 'index'])->name('helloAdmin');
 
         Route::get('/image/{id_image}', function ($id_image) {
@@ -116,6 +117,7 @@ Route::prefix('/admin')->group(function () {
         Route::get('/essential-oil/product/get-all', [EssentialOilProductController::class, 'getAll'])->name('getAllEssentialOiProduct');
         Route::get('/essential-oil/product-edit', [AdminController::class, 'index'])->name('editEssentialOiProductPanel');
         Route::post('/essential-oil/product/edit/sub-edit', [EssentialOilProductController::class, 'update'])->name('editEssentialOiProduct');
+        Route::post('/essential-oil/product/delete', [EssentialOilProductController::class, 'delete'])->name('deleteEssentialOiProduct');
 
         /*------- For 'Type Product' -------*/
         Route::get('/essential-oil/type-product', [AdminController::class, 'index'])->name('essentialOiTypeProductPage');
@@ -133,16 +135,12 @@ Route::prefix('/admin')->group(function () {
     });
 });
 
-Route::get('/test', function () {
-    $dataProduct = DB::table('essential_oil_products')
-        ->select()
-        ->join('essential_oil_categories',
-            'essential_oil_categories.id',
-            '=',
-            'essential_oil_products.FkEssentialOilCategory_id')
-        ->get();
-
-    echo json_encode($dataProduct);
+Route::get('/test', function (Request $request) {
+    $useCheck = DB::table('users')
+        ->where('users.User_token', '=', $request->cookie('token'))
+        ->get()->first();
+//    var_dump($useCheck);
+    echo $useCheck->User_IsAdmin;
 });
 
 Route::get('/image/essential-oil/product/{id_product}/{id_image}', function ($id_product, $id_image) {
