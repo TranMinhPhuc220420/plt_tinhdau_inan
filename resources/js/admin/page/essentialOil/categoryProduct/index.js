@@ -18,6 +18,10 @@ const EssentialOilCategoryProduct = () => {
     name: '',
     typeProduct_id: ''
   });
+  const [fileCategoryProduct, setFileCategoryProduct] = useState({
+    urlTemp: '',
+    file: null
+  });
 
   //data main to get
   const [dataTypeProduct, setDataTypeProduct] = useState([]);
@@ -29,31 +33,54 @@ const EssentialOilCategoryProduct = () => {
    */
   const actionAdd = (event) => {
     event.preventDefault();
-    CategoryProductController.add(dataNewCategoryProduct, (result) => {
-      if (result.status == 200) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Thêm thành công! 😉',
-          showConfirmButton: false,
-          timer: 1000
-        });
-        setDataNewCategoryProduct({
-          name: '',
-          typeProduct_id: ''
-        }); //refresh input
-        setTookCategoryProduct(false);
-        document.getElementById('selectTypeProduct').value = 'null';
-      } else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Thêm không thành công! 😥',
-          showConfirmButton: false,
-          timer: 1000
-        });
-      }
-    });
+
+    let data = new FormData();
+    data.append('fileImage', fileCategoryProduct.file);
+    data.append('name', dataNewCategoryProduct.name.trim());
+
+    if (data.get('name') != '' && data.get('fileImage') != null) {
+      CategoryProductController.add(data, (result) => {
+        if (result.status == 200) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Thêm thành công! 😉',
+            showConfirmButton: false,
+            timer: 1000
+          });
+
+          //refresh input
+          setDataNewCategoryProduct({
+            name: '',
+            typeProduct_id: ''
+          });
+          setTookCategoryProduct(false);
+          // document.getElementById('selectTypeProduct').value = 'null';
+          setFileCategoryProduct({
+            urlTemp: '',
+            file: null
+          });
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Thêm không thành công! 😥',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Thêm không thành công! 😥',
+        text: 'Thông tin nhập còn trống',
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+
   };
 
   const formatDate = (strDate) => {
@@ -110,38 +137,88 @@ const EssentialOilCategoryProduct = () => {
     })
   };
 
+  // const alertBoxEdit = (itemEdit) => {
+  //   let dataType = dataTypeProduct.map(item => item.EssentialOilType_Name);
+
+  //   Swal.mixin({
+  //     allowOutsideClick: () => !Swal.isLoading(),
+  //     confirmButtonText: 'Next &rarr;',
+  //     showCancelButton: true,
+  //     progressSteps: ['1']
+  //   }).queue([
+  //     {
+  //       input: 'text',
+  //       title: 'Tên loại sản phẩm',
+  //       text: 'Nhập tên loại sản phẩm mới',
+  //       inputPlaceholder: itemEdit.EssentialOilCategory_Name
+  //     },
+  //     // {
+  //     //   input: 'select',
+  //     //   title: 'Thể loại',
+  //     //   text: 'Chọn thể loại sản phẩm mới',
+  //     //   inputOptions: dataType
+  //     // },
+  //   ]).then((result) => {
+  //     if (result.value) {
+  //       const answers = result.value;
+  //       let nameChange = answers[0].trim();
+  //       // let typeProduct_idChange = dataTypeProduct[answers[1]].id;
+
+  //       if (nameChange != '') {
+  //         let data = {
+  //           'idCategory': itemEdit.id,
+  //           'nameChange': nameChange,
+  //           'typeProduct_idChange': typeProduct_idChange
+  //         };
+
+  //         CategoryProductController.edit(data, (result) => {
+  //           if (result.status == 200) {
+  //             Swal.fire({
+  //               position: 'top-end',
+  //               icon: 'success',
+  //               title: 'Sửa thành công! 😉',
+  //               showConfirmButton: false,
+  //               timer: 900
+  //             });
+  //             // getData(false); //get new data
+  //             setTookCategoryProduct(false);
+  //           } else {
+  //             Swal.fire({
+  //               icon: 'error',
+  //               title: 'Oops...',
+  //               text: 'Sửa không thành công! 😥',
+  //             });
+  //           }
+  //         });
+
+  //       } else {
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Oops...',
+  //           text: 'Sửa không thành công! 😥',
+  //         });
+  //       }
+  //     }
+  //   })
+  // };
+
   const alertBoxEdit = (itemEdit) => {
-    let dataType = dataTypeProduct.map(item => item.EssentialOilType_Name);
-
-    Swal.mixin({
-      allowOutsideClick: () => !Swal.isLoading(),
-      confirmButtonText: 'Next &rarr;',
-      showCancelButton: true,
-      progressSteps: ['1', '2']
-    }).queue([
-      {
-        input: 'text',
-        title: 'Tên loại sản phẩm',
-        text: 'Nhập tên loại sản phẩm mới',
-        inputPlaceholder: itemEdit.EssentialOilCategory_Name
+    Swal.fire({
+      title: 'Nhập tên loại sản phẩm bạn muốn sửa',
+      input: 'text',
+      inputPlaceholder: itemEdit.EssentialOilCategory_Name,
+      inputAttributes: {
+        autocapitalize: 'off'
       },
-      {
-        input: 'select',
-        title: 'Thể loại',
-        text: 'Chọn thể loại sản phẩm mới',
-        inputOptions: dataType
-      },
-    ]).then((result) => {
-      if (result.value) {
-        const answers = result.value;
-        let nameChange = answers[0].trim();
-        let typeProduct_idChange = dataTypeProduct[answers[1]].id;
+      confirmButtonText: 'Sửa',
+      showLoaderOnConfirm: true,
+      preConfirm: (nameTypeProductChange) => {
+        nameTypeProductChange.trim();
 
-        if (nameChange != '') {
+        if (nameTypeProductChange !== '') {
           let data = {
             'idCategory': itemEdit.id,
-            'nameChange': nameChange,
-            'typeProduct_idChange': typeProduct_idChange
+            'nameChange': nameTypeProductChange,
           };
 
           CategoryProductController.edit(data, (result) => {
@@ -163,7 +240,6 @@ const EssentialOilCategoryProduct = () => {
               });
             }
           });
-
         } else {
           Swal.fire({
             icon: 'error',
@@ -171,8 +247,9 @@ const EssentialOilCategoryProduct = () => {
             text: 'Sửa không thành công! 😥',
           });
         }
-      }
-    })
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    });
   };
 
   /**
@@ -233,18 +310,28 @@ const EssentialOilCategoryProduct = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>Thể loại sản phẩm</label>
-                      <select id="selectTypeProduct" className="form-control select2 select2-hidden-accessible"
-                        style={{ width: '100%' }}
-                        defaultValue='null'
-                        onChange={(event) => setDataNewCategoryProduct({ name: dataNewCategoryProduct.name, typeProduct_id: event.target.value })}
-                      >
-                        <option value="null" disabled> Chọn thể loại sản phẩm ...</option>
-                        {dataTypeProduct.map((item, index) => (
-                          <option key={index} value={item.id}> {item.EssentialOilType_Name} </option>
-                        ))}
-                      </select>
+                      <label htmlFor="fileImage">Hình ảnh mô tả</label>
+                      <div className="input-group">
+                        <div className="custom-file">
+                          <input type="file" className="custom-file-input" id="fileImage"
+                            accept="image/png, image/jpeg"
+                            onChange={(event) => {
+                              setFileCategoryProduct({
+                                file: event.target.files[0],
+                                urlTemp: (window.URL || window.webkitURL).createObjectURL(event.target.files[0])
+                              });
+
+                              event.target.files = null;
+                            }} />
+                          <label className="custom-file-label" htmlFor="fileImage">Choose file</label>
+                        </div>
+
+                      </div>
+                      <img className="img-type-demo" src={fileCategoryProduct.urlTemp}
+                        style={{ width: '70px', marginTop: '10px' }} />
+
                     </div>
+
                   </div>
 
                   <div className="card-footer">
@@ -289,7 +376,8 @@ const EssentialOilCategoryProduct = () => {
                           <tr key={item.id}>
                             <td> <a href="#">{item.id}</a> </td>
                             <td> {item.EssentialOilCategory_Name} </td>
-                            <td> {item.EssentialOilType_Name} </td>
+                            {/* <td> {item.EssentialOilType_Name} </td> */}
+                            <td> <img style={{ width: 100 }} src={`/image/essential-oil/category/${item.EssentialOilCategory_Image}`} /> </td>
                             <td> <span className="badge badge-success">0</span> </td>
                             <td> {formatDate(item.created_at)} </td>
                             <td className="td-center">

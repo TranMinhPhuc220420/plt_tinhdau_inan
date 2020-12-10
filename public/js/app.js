@@ -39077,19 +39077,20 @@ var NavLeft = function NavLeft() {
       iconCls: 'fas fa-stream',
       path: '/admin/essential-oil/category-product',
       isActive: false
-    }, {
-      text: 'Thể loại sản phẩm',
-      iconCls: 'fas fa-bezier-curve',
-      path: '/admin/essential-oil/type-product',
-      isActive: false
-    }]
+    } // {
+    //   text: 'Thể loại sản phẩm',
+    //   iconCls: 'fas fa-bezier-curve',
+    //   path: '/admin/essential-oil/type-product',
+    //   isActive: false
+    // }
+    ]
   }, {
     text: 'In ấn',
     iconCls: 'fas fa-print',
     menuItem: [{
       text: 'Sản phẩm',
       iconCls: 'fas fa-th-large',
-      path: '/admin/essential-oil/product',
+      path: '/admin/print-store/product',
       isActive: false
     }]
   }]),
@@ -39327,19 +39328,7 @@ var CategoryProductController = {
     _model_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_0__["default"].getData(callback);
   },
   add: function add(data, callback) {
-    var result = {
-      status: false,
-      message: ''
-    };
-    data.name.trim();
-    data.typeProduct_id.trim();
-
-    if (data.name === '' || data.typeProduct_id === '') {
-      result.message = 'Vui lòng nhập đầy đủ thông tin muốn thêm';
-      callback(result);
-    } else {
-      _model_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_0__["default"].addNewCategory(data, callback);
-    }
+    _model_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_0__["default"].addNewCategory(data, callback);
   },
   "delete": function _delete(data, callback) {
     if (data.id) {
@@ -39660,18 +39649,26 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
   }),
       _useState6 = _slicedToArray(_useState5, 2),
       dataNewCategoryProduct = _useState6[0],
-      setDataNewCategoryProduct = _useState6[1]; //data main to get
+      setDataNewCategoryProduct = _useState6[1];
 
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    urlTemp: '',
+    file: null
+  }),
       _useState8 = _slicedToArray(_useState7, 2),
-      dataTypeProduct = _useState8[0],
-      setDataTypeProduct = _useState8[1];
+      fileCategoryProduct = _useState8[0],
+      setFileCategoryProduct = _useState8[1]; //data main to get
+
 
   var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState10 = _slicedToArray(_useState9, 2),
-      dataCategoryProduct = _useState10[0],
-      setDataCategoryProduct = _useState10[1];
+      dataTypeProduct = _useState10[0],
+      setDataTypeProduct = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState12 = _slicedToArray(_useState11, 2),
+      dataCategoryProduct = _useState12[0],
+      setDataCategoryProduct = _useState12[1];
   /**
    * FUNCTION
    */
@@ -39679,32 +39676,51 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
 
   var actionAdd = function actionAdd(event) {
     event.preventDefault();
-    _controller_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_3__["default"].add(dataNewCategoryProduct, function (result) {
-      if (result.status == 200) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Thêm thành công! 😉',
-          showConfirmButton: false,
-          timer: 1000
-        });
-        setDataNewCategoryProduct({
-          name: '',
-          typeProduct_id: ''
-        }); //refresh input
+    var data = new FormData();
+    data.append('fileImage', fileCategoryProduct.file);
+    data.append('name', dataNewCategoryProduct.name.trim());
 
-        setTookCategoryProduct(false);
-        document.getElementById('selectTypeProduct').value = 'null';
-      } else {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Thêm không thành công! 😥',
-          showConfirmButton: false,
-          timer: 1000
-        });
-      }
-    });
+    if (data.get('name') != '' && data.get('fileImage') != null) {
+      _controller_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_3__["default"].add(data, function (result) {
+        if (result.status == 200) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Thêm thành công! 😉',
+            showConfirmButton: false,
+            timer: 1000
+          }); //refresh input
+
+          setDataNewCategoryProduct({
+            name: '',
+            typeProduct_id: ''
+          });
+          setTookCategoryProduct(false); // document.getElementById('selectTypeProduct').value = 'null';
+
+          setFileCategoryProduct({
+            urlTemp: '',
+            file: null
+          });
+        } else {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Thêm không thành công! 😥',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        }
+      });
+    } else {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Thêm không thành công! 😥',
+        text: 'Thông tin nhập còn trống',
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
   };
 
   var formatDate = function formatDate(strDate) {
@@ -39758,40 +39774,85 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
         });
       }
     });
-  };
+  }; // const alertBoxEdit = (itemEdit) => {
+  //   let dataType = dataTypeProduct.map(item => item.EssentialOilType_Name);
+  //   Swal.mixin({
+  //     allowOutsideClick: () => !Swal.isLoading(),
+  //     confirmButtonText: 'Next &rarr;',
+  //     showCancelButton: true,
+  //     progressSteps: ['1']
+  //   }).queue([
+  //     {
+  //       input: 'text',
+  //       title: 'Tên loại sản phẩm',
+  //       text: 'Nhập tên loại sản phẩm mới',
+  //       inputPlaceholder: itemEdit.EssentialOilCategory_Name
+  //     },
+  //     // {
+  //     //   input: 'select',
+  //     //   title: 'Thể loại',
+  //     //   text: 'Chọn thể loại sản phẩm mới',
+  //     //   inputOptions: dataType
+  //     // },
+  //   ]).then((result) => {
+  //     if (result.value) {
+  //       const answers = result.value;
+  //       let nameChange = answers[0].trim();
+  //       // let typeProduct_idChange = dataTypeProduct[answers[1]].id;
+  //       if (nameChange != '') {
+  //         let data = {
+  //           'idCategory': itemEdit.id,
+  //           'nameChange': nameChange,
+  //           'typeProduct_idChange': typeProduct_idChange
+  //         };
+  //         CategoryProductController.edit(data, (result) => {
+  //           if (result.status == 200) {
+  //             Swal.fire({
+  //               position: 'top-end',
+  //               icon: 'success',
+  //               title: 'Sửa thành công! 😉',
+  //               showConfirmButton: false,
+  //               timer: 900
+  //             });
+  //             // getData(false); //get new data
+  //             setTookCategoryProduct(false);
+  //           } else {
+  //             Swal.fire({
+  //               icon: 'error',
+  //               title: 'Oops...',
+  //               text: 'Sửa không thành công! 😥',
+  //             });
+  //           }
+  //         });
+  //       } else {
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Oops...',
+  //           text: 'Sửa không thành công! 😥',
+  //         });
+  //       }
+  //     }
+  //   })
+  // };
+
 
   var alertBoxEdit = function alertBoxEdit(itemEdit) {
-    var dataType = dataTypeProduct.map(function (item) {
-      return item.EssentialOilType_Name;
-    });
-    sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.mixin({
-      allowOutsideClick: function allowOutsideClick() {
-        return !sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.isLoading();
-      },
-      confirmButtonText: 'Next &rarr;',
-      showCancelButton: true,
-      progressSteps: ['1', '2']
-    }).queue([{
+    sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+      title: 'Nhập tên loại sản phẩm bạn muốn sửa',
       input: 'text',
-      title: 'Tên loại sản phẩm',
-      text: 'Nhập tên loại sản phẩm mới',
-      inputPlaceholder: itemEdit.EssentialOilCategory_Name
-    }, {
-      input: 'select',
-      title: 'Thể loại',
-      text: 'Chọn thể loại sản phẩm mới',
-      inputOptions: dataType
-    }]).then(function (result) {
-      if (result.value) {
-        var answers = result.value;
-        var nameChange = answers[0].trim();
-        var typeProduct_idChange = dataTypeProduct[answers[1]].id;
+      inputPlaceholder: itemEdit.EssentialOilCategory_Name,
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      confirmButtonText: 'Sửa',
+      showLoaderOnConfirm: true,
+      preConfirm: function preConfirm(nameTypeProductChange) {
+        nameTypeProductChange.trim();
 
-        if (nameChange != '') {
+        if (nameTypeProductChange !== '') {
           var data = {
             'idCategory': itemEdit.id,
-            'nameChange': nameChange,
-            'typeProduct_idChange': typeProduct_idChange
+            'nameChange': nameTypeProductChange
           };
           _controller_EssentialOil_categoryProduct__WEBPACK_IMPORTED_MODULE_3__["default"].edit(data, function (result) {
             if (result.status == 200) {
@@ -39819,6 +39880,9 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
             text: 'Sửa không thành công! 😥'
           });
         }
+      },
+      allowOutsideClick: function allowOutsideClick() {
+        return !sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.isLoading();
       }
     });
   };
@@ -39897,28 +39961,35 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Th\u1EC3 lo\u1EA1i s\u1EA3n ph\u1EA9m"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-    id: "selectTypeProduct",
-    className: "form-control select2 select2-hidden-accessible",
-    style: {
-      width: '100%'
-    },
-    defaultValue: "null",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "fileImage"
+  }, "H\xECnh \u1EA3nh m\xF4 t\u1EA3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "input-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "custom-file"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "file",
+    className: "custom-file-input",
+    id: "fileImage",
+    accept: "image/png, image/jpeg",
     onChange: function onChange(event) {
-      return setDataNewCategoryProduct({
-        name: dataNewCategoryProduct.name,
-        typeProduct_id: event.target.value
+      setFileCategoryProduct({
+        file: event.target.files[0],
+        urlTemp: (window.URL || window.webkitURL).createObjectURL(event.target.files[0])
       });
+      event.target.files = null;
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "null",
-    disabled: true
-  }, " Ch\u1ECDn th\u1EC3 lo\u1EA1i s\u1EA3n ph\u1EA9m ..."), dataTypeProduct.map(function (item, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      key: index,
-      value: item.id
-    }, " ", item.EssentialOilType_Name, " ");
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "custom-file-label",
+    htmlFor: "fileImage"
+  }, "Choose file"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "img-type-demo",
+    src: fileCategoryProduct.urlTemp,
+    style: {
+      width: '70px',
+      marginTop: '10px'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-footer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
@@ -39951,7 +40022,12 @@ var EssentialOilCategoryProduct = function EssentialOilCategoryProduct() {
       key: item.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "#"
-    }, item.id), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", item.EssentialOilCategory_Name, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", item.EssentialOilType_Name, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, item.id), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", item.EssentialOilCategory_Name, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      style: {
+        width: 100
+      },
+      src: "/image/essential-oil/category/".concat(item.EssentialOilCategory_Image)
+    }), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "badge badge-success"
     }, "0"), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, " ", formatDate(item.created_at), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "td-center"

@@ -3,13 +3,13 @@
     <div class="container">
         <div class="nav-left">
             <div class="nav-logo">
-                <a href="/tinh-dau">
-                    <img src="{{asset('images/logo-eva-vn-c5.jpg')}}" alt="" class="logo">
+                <a href="/">
+                    <img src="{{asset('images/logo-eva-vn-large.jpg')}}" alt="" class="logo">
                 </a>
             </div>
 
             <div class="name-business">
-                <a href="/tinh-dau"><span class="text">eva vietnam</span></a>
+                <a href="/"><span class="text">eva vietnam</span></a>
             </div>
 
             <div class="collapse-nav">
@@ -26,18 +26,18 @@
 
         <div class="nav-right">
             <a href="#">
-                <img src="{{asset('images/logo-eva-vn-c5.jpg')}}" class="logo-navbar-mobile" alt="">
+                <img src="{{asset('images/logo-eva-vn-large.jpg')}}" class="logo-navbar-mobile" alt="">
             </a>
 
             <div class="nav-link">
                 <ul class="list-link">
                     <li class="item pos-re hv-lb">
-                        <a href="/tinh-dau" class="link">Trang chủ</a>
+                        <a href="/" class="link">Trang chủ</a>
                     </li>
 
-                    <li class="item pos-re hv-lb">
-                        <a href="/tinh-dau/shop" class="link">Cửa hàng</a>
-                    </li>
+{{--                    <li class="item pos-re hv-lb">--}}
+{{--                        <a href="#" class="link">Cửa hàng</a>--}}
+{{--                    </li>--}}
 
                     <li class="item pos-re hv-lb">
                         <a href="#" class="link">Liên hệ</a>

@@ -459,7 +459,7 @@ a:hover {
   bottom: -70vh;
   right: 10%;
   left: unset;
-  width: 40%;
+  width: 45%;
 }
 
 #carouselMain .carousel-inner .carousel-item .carousel-caption .caption-top .product-name,
@@ -879,20 +879,20 @@ a:hover {
   font-size: 0.9em;
 }
 
-#content section.discount-items .section-body .list-unstyled .media .media-body .discount {
-  color: #333;
+#content section.discount-items .section-body .list-unstyled .media .media-body .price, #content section.discount-items .section-body .list-unstyled .media .media-body .price-discount {
+  margin: 0;
 }
 
-#content section.discount-items .section-body .list-unstyled .media .media-body .discount .price .currency, #content section.discount-items .section-body .list-unstyled .media .media-body .discount .price-discount .currency {
+#content section.discount-items .section-body .list-unstyled .media .media-body .price .currency, #content section.discount-items .section-body .list-unstyled .media .media-body .price-discount .currency {
   font-size: 7px;
 }
 
-#content section.discount-items .section-body .list-unstyled .media .media-body .discount .price {
+#content section.discount-items .section-body .list-unstyled .media .media-body .price {
   font-size: 0.7em;
   text-decoration: line-through;
 }
 
-#content section.discount-items .section-body .list-unstyled .media .media-body .discount .price-discount {
+#content section.discount-items .section-body .list-unstyled .media .media-body .price-discount {
   font-size: 0.8em;
   font-family: "Rubik", sans-serif;
 }

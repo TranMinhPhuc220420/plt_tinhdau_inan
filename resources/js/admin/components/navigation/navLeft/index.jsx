@@ -21,12 +21,12 @@ const NavLeft = () => {
           path: '/admin/essential-oil/category-product',
           isActive: false
         },
-        {
-          text: 'Thể loại sản phẩm',
-          iconCls: 'fas fa-bezier-curve',
-          path: '/admin/essential-oil/type-product',
-          isActive: false
-        }
+        // {
+        //   text: 'Thể loại sản phẩm',
+        //   iconCls: 'fas fa-bezier-curve',
+        //   path: '/admin/essential-oil/type-product',
+        //   isActive: false
+        // }
       ]
     },
 
@@ -37,7 +37,7 @@ const NavLeft = () => {
         {
           text: 'Sản phẩm',
           iconCls: 'fas fa-th-large',
-          path: '/admin/essential-oil/product',
+          path: '/admin/print-store/product',
           isActive: false
         },
       ]

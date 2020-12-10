@@ -1,4 +1,4 @@
-@extends('client.essentialOil.layout.main')
+@extends('client.layouts.main')
 
 @section('carousel')
     <!-- carousel -->
@@ -19,14 +19,16 @@
                     <div class="carousel-caption d-md-block">
 
                         <div class="caption-top">
-                            <h3 class="product-name">Hello World</h3>
-                            <p class="product-type">Type new development</p>
+                            <h3 class="product-name">Tinh dầu Thủ Đức Việt Nam</h3>
+                            <p class="product-type">
+                              Thiên nhiên đã hào phóng ban tặng cho chúng ta một hệ động thực vật vô cùng đa dạng, phong phú và huyền bí.
+                            </p>
                         </div>
 
-                        <div class="caption-bottom">
-                            <p class="price-discount">150.000 VNĐ</p>
-                            <p class="price">350.000 VNĐ</p>
-                        </div>
+{{--                        <div class="caption-bottom">--}}
+{{--                            <p class="price-discount">150.000 VNĐ</p>--}}
+{{--                            <p class="price">350.000 VNĐ</p>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 
@@ -35,15 +37,17 @@
                     <div class="carousel-caption d-md-block">
 
                         <div class="caption-top">
-                            <h3 class="product-name">Hello World</h3>
-                            <p class="product-type">Type new development</p>
+                            <h3 class="product-name">In ấn Thủ Đức Việt Nam</h3>
+                            <p class="product-type">
+                              Bao Bì Yến Phát với nhiều nằm kinh nghiệm cung cấp thiết kế in ấn các loại bao bì. Bao bì phục vụ doanh nghiệp, cửa hàng, bao bì đựng sản phẩm có logo và thiết kế.
+                            </p>
                         </div>
 
                         <div class="caption-bottom">
-                            <p class="price-discount">150.000 VNĐ</p>
-                            <p class="price">350.000 VNĐ</p>
+{{--                            <p class="price-discount">150.000 VNĐ</p>--}}
+{{--                            <p class="price">350.000 VNĐ</p>--}}
 
-                            <a href="./detail.html" class="link">shop now</a>
+                            <a href="./in-an" class="link">Đến cửa hàng</a>
                         </div>
                     </div>
                 </div>

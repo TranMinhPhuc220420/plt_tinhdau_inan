@@ -45,7 +45,16 @@ for (let i = 0; i < parent.length; i++) {
 }
 
 
-function test(id) {
-  console.log(id);
-  window.location.href = `tinh-dau/detail/${id}`;
+function test(id, name) {
+  window.location.pathname = `tinh-dau/detail/${Math.random()}/${Date().toLowerCase() //Low case name file film
+    .normalize("NFD")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .replace(/\\s+/g, "-")}/${id}/${name.toLowerCase()
+    .normalize("NFD")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .replace(/\\s+/g, "-")}`;
 }

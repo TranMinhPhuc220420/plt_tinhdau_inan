@@ -6,20 +6,7 @@ const CategoryProductController = {
   },
 
   add: (data, callback) => {
-    let result = {
-      status: false,
-      message: '',
-    };
-
-    data.name.trim();
-    data.typeProduct_id.trim();
-
-    if (data.name === '' || data.typeProduct_id === '') {
-      result.message = 'Vui lòng nhập đầy đủ thông tin muốn thêm';
-      callback(result);
-    } else {
-      EssentialOilCategoryProductModel.addNewCategory(data, callback);
-    }
+    EssentialOilCategoryProductModel.addNewCategory(data, callback);
   },
 
   delete: (data, callback) => {

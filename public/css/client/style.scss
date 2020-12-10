@@ -442,7 +442,7 @@ a:hover {
         bottom: -70vh;
         right: 10%;
         left: unset;
-        width: 40%;
+        width: 45%;
 
         .caption-top {
           .product-name,
@@ -821,10 +821,10 @@ a:hover {
               font-size: 0.9em;
             }
 
-            .discount {
-              color: $color-text-normal;
+          
 
               .price, .price-discount{
+                margin: 0;
                 .currency{
                   font-size: 7px;
                 }
@@ -837,7 +837,6 @@ a:hover {
                 font-size: 0.8em;
                 font-family: "Rubik", sans-serif;
               }
-            }
 
             .start {
               font-size: 0.7em;

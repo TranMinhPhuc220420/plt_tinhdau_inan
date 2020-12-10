@@ -16,7 +16,8 @@ class CreateEssentialOilCategoriesTable extends Migration
         Schema::create('essential_oil_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('EssentialOilCategory_Name');
-            $table->unsignedInteger('FkEssentialOilType_id');
+            $table->string('EssentialOilCategory_Image');
+            $table->unsignedInteger('FkEssentialOilType_id')->default(200520);
             $table->timestamps();
         });
     }
