@@ -221,6 +221,7 @@ class EssentialOilProductController extends Controller
 
     if ($idDelete) {
       DB::table('essential_oil_products')->where('id', '=', $idDelete)->delete();
+      DB::table('comments')->where('FkEssentialOilProduct_id', '=', $idDelete)->delete();
       Storage::deleteDirectory('public/images/essential-oil/product/' . $idDelete);
       echo json_encode(['status' => 200, 'message' => 'ok']);
     }else{

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\OrderEssentialOilController;
+use App\Http\Controllers\OrderPrintController;
 use App\Http\Controllers\PrintProductController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\EssentialOilTypeController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -18,6 +21,8 @@ use Illuminate\Support\Facades\Storage;
  * */
 Route::prefix('/essential-oil')->group(function () {
   Route::get('/', function () {
+    session('userLive', 213);
+
     $dataProduct = DB::table('essential_oil_products')
       ->select([
         'essential_oil_products.id',
@@ -273,12 +278,14 @@ Route::prefix('/essential-oil')->group(function () {
   })->name('essential-oil-search');
 
   Route::post('/addComment', [CommentController::class, 'store'])->name('essentialOilAddNewComment');
+
+  Route::post('/addOrder', [OrderEssentialOilController::class, 'store'])->name('essentialOilAddNewOrder');
 });
 
 /*
  * Print Store
  * */
-Route::prefix('/print-store')->group(function (){
+Route::prefix('/print-store')->group(function () {
   //Index
   Route::get('/cart', function () {
     //Value set fast
@@ -335,6 +342,8 @@ Route::prefix('/print-store')->group(function (){
       ->with(compact('dataComment'))
       ->with(compact('dataListPrice'));
   });
+
+  Route::post('/addOrder', [OrderPrintController::class, 'store'])->name('printStoreAddNewOrder');
 });
 
 
@@ -394,6 +403,12 @@ Route::prefix('/admin')->group(function () {
     Route::post('/print-store/product/edit/sub-edit', [PrintProductController::class, 'update'])->name('updatePrintProduct');
     Route::post('/print-store/product/delete/sub-delete', [PrintProductController::class, 'delete'])->name('updatePrintProduct');
 
+    /*
+     * PRINT STORE ORDER
+     */
+    /*------- For 'Order' -------*/
+    Route::get('/print-store/order/get-all', [OrderPrintController::class, 'getAll'])->name('getAllOrder');
+
   });
 });
 
@@ -401,11 +416,17 @@ Route::prefix('/admin')->group(function () {
  * Test Router
  * */
 Route::get('/test', function (Request $request) {
-  $useCheck = DB::table('users')
-    ->where('users.User_token', '=', $request->cookie('token'))
-    ->get()->first();
-//    var_dump($useCheck);
-  echo $useCheck->User_IsAdmin;
+  Session::put('key', 999999);
+  $test = Session::get('key');
+  echo $test;
+  Session::remove('key');
+  Session::put('key', 12312312);
+  $test = Session::get('key');
+  echo $test;
+});
+
+Route::post('/test-post', function (Request $request) {
+
 });
 
 /*

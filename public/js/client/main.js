@@ -68,6 +68,7 @@ const showCart = () => {
       dockBtnCheckoutInCart.style.display = 'none';
       listProductInCart.style.display = 'none';
       priceCountInCart.innerHTML = '0';
+      countProductInCart.innerHTML = '0';
 
       panelCartIsEmpty.style.display = 'block';
     } else {
@@ -203,6 +204,7 @@ const PrintStoreShowCart = () => {
       dockBtnCheckoutInCart.style.display = 'none';
       listProductInCart.style.display = 'none';
       priceCountInCart.innerHTML = '0';
+      countProductInCart.innerHTML = '0';
 
       panelCartIsEmpty.style.display = 'block';
     } else {
@@ -283,8 +285,7 @@ const PrintStoreShowListProductInCart = () => {
               </a>
             </td>
             <td style="${stylePriceProduct}">${itemProduct.priceProduct} VNĐ</td>
-            <td>${priceProduct} VNĐ</td>
-            <td>${price}</td>`;
+            <td>${priceProduct} VNĐ</td>`;
 
           listProductCheckout.append(newItem);
         });
@@ -314,6 +315,8 @@ const PrintStoreRemoveItemInCart = (idProduct) => {
     showListProductInCart();
     PrintStoreShowCart();
   }
+
+  PrintStoreShowCart();
 }
 
 window.onload = () => {
@@ -443,7 +446,7 @@ window.onload = () => {
               'success'
             )
           }
-        }else{
+        } else {
           Swal.fire(
             'Thêm thất bại',
             'Vui lòng chọn giá sản phẩm muốn mua',
@@ -452,6 +455,98 @@ window.onload = () => {
         }
       });
     }
+
+    /*
+    * Set event submit add new order
+    * */
+    const formAddOrder = document.getElementById('formAddOrder');
+    if (formAddOrder) {
+      formAddOrder.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const inputOrderFullName = document.getElementById('inputOrderFullName');
+        const inputOrderPhoneNumber = document.getElementById('inputOrderPhoneNumber');
+        const inputOrderEmail = document.getElementById('inputOrderEmail');
+        const inputOrderAddress = document.getElementById('inputOrderAddress');
+        const inputOrderNote = document.getElementById('inputOrderNote');
+        const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore")).map(item => {
+          return {
+            idProduct: item.idProduct,
+            optionPrice: item.priceProduct
+          }
+        });
+
+        if (myCart == null || myCart.length === 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Không đặt hành thành công',
+            text: 'Giỏ hàng hiện tại của bạn chưa có gì!',
+            footer: '<a href="/essential-oil/shop">Đi đến cửa hàng</a>'
+          })
+        } else {
+          const fullName = inputOrderFullName.value.trim();
+          const phoneNumber = inputOrderPhoneNumber.value.trim();
+          const email = inputOrderEmail.value.trim();
+          const address = inputOrderAddress.value.trim();
+          const note = inputOrderNote.value.trim();
+
+          //validate
+          if (fullName === '' || phoneNumber === '' || address === '') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Không đặt hành thành công',
+              text: 'Thông tin bạn nhập còn thiếu!',
+            })
+          } else {
+            let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            let vnEmail_regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/g;
+
+            //Check data
+            fullName.trim();
+            phoneNumber.trim();
+            email.trim();
+            address.trim();
+            note.trim()
+
+
+            if (fullName == ''
+              || vnf_regex.test(phoneNumber) == false
+              || (vnEmail_regex.test(email) == false && email != '')
+              || address == '' || address.length < 10) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Không đặt hành thành công',
+                text: 'Thông tin bạn nhập còn thiếu hoặc đã sai!',
+              })
+            }else{
+              //Create data to post
+              const data = {
+                fullName: fullName,
+                phoneNumber: phoneNumber,
+                email: email == '' || email ? 'Email trống' : email,
+                address: address,
+                note: note == '' || note ? 'Không có ghi chú' : note,
+                listProduct: JSON.stringify(myCart)
+              }
+              axios.post('/print-store/addOrder', data)
+                .then(response => {
+                  if (response.data.status == 200) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Đặt hàng thành công',
+                      text: `Chúng tôi sẽ liện hệ bạn ngay khi nhận đơn hàng này qua số điện thoại là ☎" ${phoneNumber}" nhé!`,
+                    }).then(() => {
+                      localStorage.setItem("myCart", JSON.stringify([]));
+                      showCart();
+                      showListProductInCart();
+                    })
+                  }
+                })
+            }
+          }
+        }
+      });
+    }
+
   } else {
     /*Show item product in cart to navbar*/
     showCart();
@@ -557,7 +652,9 @@ window.onload = () => {
         const inputOrderEmail = document.getElementById('inputOrderEmail');
         const inputOrderAddress = document.getElementById('inputOrderAddress');
         const inputOrderNote = document.getElementById('inputOrderNote');
-        const myCart = JSON.parse(localStorage.getItem("myCart"));
+        const myCart = JSON.parse(localStorage.getItem("myCart")).map(item => {
+          return {idProduct: item.idProduct}
+        });
 
         if (myCart == null || myCart.length === 0) {
           Swal.fire({
@@ -581,20 +678,51 @@ window.onload = () => {
               text: 'Thông tin bạn nhập còn thiếu!',
             })
           } else {
-            //Create data to post
-            const data = {
-              fullName: fullName,
-              phone: phoneNumber,
-              email: email,
-              address: address,
-              note: note,
-              listProductOrder: JSON.stringify(myCart)
-            }
+              let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+              let vnEmail_regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/g;
 
-            axios.post('/oder/submit-add', data)
-              .then(response => {
-                console.log(response)
+            //Check data
+            fullName.trim();
+            phoneNumber.trim();
+            email.trim();
+            address.trim();
+            note.trim()
+
+
+            if (fullName == ''
+              || vnf_regex.test(phoneNumber) == false
+              || (vnEmail_regex.test(email) == false && email != '')
+              || address == '' || address.length < 10) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Không đặt hành thành công',
+                text: 'Thông tin bạn nhập còn thiếu hoặc đã sai!',
               })
+            }else{
+              //Create data to post
+              const data = {
+                fullName: fullName,
+                phoneNumber: phoneNumber,
+                email: email == '' || email ? 'Email trống' : email,
+                address: address,
+                note: note == '' || note ? 'Không có ghi chú' : note,
+                listIDProduct: JSON.stringify(myCart)
+              }
+              axios.post('/essential-oil/addOrder', data)
+                .then(response => {
+                  if (response.data.status == 200) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Đặt hàng thành công',
+                      text: `Chúng tôi sẽ liện hệ bạn ngay khi nhận đơn hàng này qua số điện thoại là ☎" ${phoneNumber}" nhé!`,
+                    }).then(() => {
+                      localStorage.setItem("myCart", JSON.stringify([]));
+                      showCart();
+                      showListProductInCart();
+                    })
+                  }
+                })
+            }
           }
         }
       });

@@ -14,7 +14,7 @@ const AppAdmin = () => {
       <AppRouter />
       <Footer />
 
-      <div id="sidebar-overlay"></div>
+      <div id="sidebar-overlay"/>
     </Router>
   );
 };

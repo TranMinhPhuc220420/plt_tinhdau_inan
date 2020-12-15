@@ -172,6 +172,7 @@ class PrintProductController extends Controller
 
     if ($idDelete) {
       DB::table('print_products')->where('id', '=', $idDelete)->delete();
+      DB::table('comments')->where('FkPrintProduct_id', '=', $idDelete)->delete();
       Storage::deleteDirectory('public/images/print-store/product/' . $idDelete);
       echo json_encode(['status' => 200, 'message' => 'ok']);
     } else {
