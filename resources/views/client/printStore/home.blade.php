@@ -60,7 +60,7 @@
                 </p>
 
                 <a
-                  href="/essential-oil/detail/Với thiết kế kiểu dáng tinh tế sang trọng./Với thiết kế kiểu dáng tinh tế sang trọng. /{{ $dataProduct[0]->id }}/tét"
+                  href="/print-store/detail/Với thiết kế kiểu dáng tinh tế sang trọng./Với thiết kế kiểu dáng tinh tế sang trọng. /{{ $dataProduct[0]->id }}/tét"
                   class="link">shop now</a>
               </div>
             </div>

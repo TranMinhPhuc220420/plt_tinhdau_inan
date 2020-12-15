@@ -61,7 +61,7 @@
                       <td>{{ $item->count }}</td>
                       <td>{{ number_format( $item->price, 0, ',', '.') }} VNĐ</td>
                       <td>
-                        <input type="radio" {{ $loop->first ? 'checked' : ''}} data-price="{{ $item->price }}"
+                        <input type="radio" data-price="{{ $item->price }}"
                                name="selectOptionOrderPrint">
                       </td>
                     </tr>

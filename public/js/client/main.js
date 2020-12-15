@@ -118,7 +118,6 @@ const showCart = () => {
     }
   }
 };
-
 const removeItemInCart = (idProduct) => {
   const myCart = JSON.parse(localStorage.getItem("myCart"));
 
@@ -135,17 +134,13 @@ const removeItemInCart = (idProduct) => {
     showCart();
   }
 }
-
-/*
-* Show list product in cart to checkout
-* */
 const showListProductInCart = () => {
   const listProductCheckout = document.getElementById('listProductCheckout');
   if (listProductCheckout) {
     listProductCheckout.innerHTML = '';
 
     if (listProductCheckout) {
-      const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
+      const myCart = JSON.parse(localStorage.getItem("myCart"));
       if (myCart) {
         let totalOrder = 0;
         myCart.forEach((itemProduct, index) => {
@@ -160,12 +155,12 @@ const showListProductInCart = () => {
 
           newItem.innerHTML = `
             <td>
-              <button class="btn" onclick="PrintStoreRemoveItemInCart('${itemProduct.idProduct}')">
+              <button class="btn" onclick="removeItemInCart('${itemProduct.idProduct}')">
                 <i class="fas fa-times"></i>
               </button>
             </td>
             <td>
-              <img src="/image/print-store/product/${itemProduct.idProduct}/${itemProduct.idImage}" alt="">
+              <img src="/image/essential-oil/product/${itemProduct.idProduct}/${itemProduct.idImage}" alt="">
             </td>
             <td>
               <a class="category-link pos-re hv-lb" href="#">
@@ -187,23 +182,6 @@ const showListProductInCart = () => {
         //When none list product check out
       }
     }
-  }
-}
-
-const PrintStoreRemoveItemInCart = (idProduct) => {
-  const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
-
-  let index = -1;
-  for (let i = 0; i < myCart.length; i++) {
-    if (idProduct == myCart[i].idProduct) {
-      index = i;
-    }
-  }
-  if (index != -1) {
-    myCart.splice(index, 1);
-    localStorage.setItem("myCartInPrintStore", JSON.stringify(myCart));
-    showListProductInCart();
-    PrintStoreShowCart();
   }
 }
 
@@ -271,6 +249,72 @@ const PrintStoreShowCart = () => {
     }
   }
 };
+const PrintStoreShowListProductInCart = () => {
+  const listProductCheckout = document.getElementById('listProductCheckout');
+  if (listProductCheckout) {
+    listProductCheckout.innerHTML = '';
+
+    if (listProductCheckout) {
+      const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
+      if (myCart) {
+        let totalOrder = 0;
+        myCart.forEach((itemProduct, index) => {
+          let newItem = document.createElement('tr');
+          let discountProduct = parseInt(itemProduct.discountProduct);
+          let priceProduct = parseInt(itemProduct.priceProduct);
+          let price = priceProduct;
+
+          totalOrder += price;
+
+          let stylePriceProduct = discountProduct > 0 ? 'text-decoration: line-through' : '';
+
+          newItem.innerHTML = `
+            <td>
+              <button class="btn" onclick="PrintStoreRemoveItemInCart('${itemProduct.idProduct}')">
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
+            <td>
+              <img src="/image/print-store/product/${itemProduct.idProduct}/${itemProduct.idImage}" alt="">
+            </td>
+            <td>
+              <a class="category-link pos-re hv-lb" href="#">
+                ${itemProduct.nameProduct.substring(0, 50)}...
+              </a>
+            </td>
+            <td style="${stylePriceProduct}">${itemProduct.priceProduct} VNĐ</td>
+            <td>${priceProduct} VNĐ</td>
+            <td>${price}</td>`;
+
+          listProductCheckout.append(newItem);
+        });
+
+        document.getElementById('totalOrder').innerHTML = new Intl.NumberFormat('vi-VI', {
+          style: 'currency',
+          currency: 'VND'
+        }).format(totalOrder)
+      } else {
+        //When none list product check out
+      }
+    }
+  }
+}
+const PrintStoreRemoveItemInCart = (idProduct) => {
+  const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
+
+  let index = -1;
+  for (let i = 0; i < myCart.length; i++) {
+    if (idProduct == myCart[i].idProduct) {
+      index = i;
+    }
+  }
+  if (index != -1) {
+    myCart.splice(index, 1);
+    localStorage.setItem("myCartInPrintStore", JSON.stringify(myCart));
+    showListProductInCart();
+    PrintStoreShowCart();
+  }
+}
 
 window.onload = () => {
   /**
@@ -303,7 +347,7 @@ window.onload = () => {
         email: txtEmail.value.trim(),
         fuckingWowShit: fuckingWowShit.value.trim(),
         contentComment: txtComment.value.trim(),
-        isCommentForPrintStore: commentPrintStore.value === 'true'
+        isCommentForPrintStore: commentPrintStore ? commentPrintStore.value === 'true' : false
       };
 
       if (data._token !== ''
@@ -343,12 +387,11 @@ window.onload = () => {
 
   if (IN_PRINT_STORE) {
     /*Set list product check out*/
-    showListProductInCart();
+    PrintStoreShowListProductInCart();
+    PrintStoreShowCart();
 
     const printStoreAddCart = document.getElementById('printStoreAddCart');
     if (printStoreAddCart) {
-      PrintStoreShowCart();
-
       printStoreAddCart.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -358,51 +401,61 @@ window.onload = () => {
         let nameProduct = document.getElementById('nameProduct');
         const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
 
-        let priceProduct = 0;
+        let priceProduct = -1;
         for (let i = 0; i < selectOptionOrderPrint.length; i++) {
-          if (selectOptionOrderPrint[i].value == 'on') {
+          if (selectOptionOrderPrint[i].checked == true) {
             priceProduct = selectOptionOrderPrint[i].dataset.price;
+            // break;
           }
         }
+        if (priceProduct !== -1) {
+          if (myCart) {
+            myCart.push({
+              'idProduct': idProduct.value,
+              'idImage': idImage.value,
+              'nameProduct': nameProduct.value,
+              'priceProduct': priceProduct,
+            });
 
-        if (myCart) {
-          myCart.push({
-            'idProduct': idProduct.value,
-            'idImage': idImage.value,
-            'nameProduct': nameProduct.value,
-            'priceProduct': priceProduct,
-          });
+            localStorage.setItem("myCartInPrintStore", JSON.stringify(myCart));
+            /*Show item product in cart to navbar*/
+            PrintStoreShowCart();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Đã cho vào giỏ hàng',
+              showConfirmButton: false,
+              timer: 1500
+            });
 
-          localStorage.setItem("myCartInPrintStore", JSON.stringify(myCart));
-          /*Show item product in cart to navbar*/
-          PrintStoreShowCart();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Đã cho vào giỏ hàng',
-            showConfirmButton: false,
-            timer: 1500
-          });
-
-        } else {
-          localStorage.setItem("myCartInPrintStore", JSON.stringify([{
-            'idProduct': idProduct.value,
-            'idImage': idImage.value,
-            'nameProduct': nameProduct.value,
-            'priceProduct': priceProduct,
-          }]));
-
-          /*Show item product in cart to navbar*/
-          PrintStoreShowCart();
+          } else {
+            localStorage.setItem("myCartInPrintStore", JSON.stringify([{
+              'idProduct': idProduct.value,
+              'idImage': idImage.value,
+              'nameProduct': nameProduct.value,
+              'priceProduct': priceProduct,
+            }]));
+            /*Show item product in cart to navbar*/
+            PrintStoreShowCart();
+            Swal.fire(
+              'Thên thành công',
+              'Kiểm tra giỏ hàng của bạn xem nào!',
+              'success'
+            )
+          }
+        }else{
           Swal.fire(
-            'Good job!',
-            'You clicked the button!',
-            'success'
+            'Thêm thất bại',
+            'Vui lòng chọn giá sản phẩm muốn mua',
+            'error'
           )
         }
       });
     }
   } else {
+    /*Show item product in cart to navbar*/
+    showCart();
+    showListProductInCart();
 
     /**
      * Add cart
@@ -492,9 +545,6 @@ window.onload = () => {
       });
     }
 
-    /*Show item product in cart to navbar*/
-    showCart();
-
     /*
     * Set event submit add new order
     * */
@@ -502,14 +552,12 @@ window.onload = () => {
     if (formAddOrder) {
       formAddOrder.addEventListener('submit', (event) => {
         event.preventDefault();
-
         const inputOrderFullName = document.getElementById('inputOrderFullName');
         const inputOrderPhoneNumber = document.getElementById('inputOrderPhoneNumber');
         const inputOrderEmail = document.getElementById('inputOrderEmail');
         const inputOrderAddress = document.getElementById('inputOrderAddress');
         const inputOrderNote = document.getElementById('inputOrderNote');
         const myCart = JSON.parse(localStorage.getItem("myCart"));
-
 
         if (myCart == null || myCart.length === 0) {
           Swal.fire({

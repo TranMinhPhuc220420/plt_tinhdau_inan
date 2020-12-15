@@ -4,7 +4,7 @@
         <div class="nav-left">
             <div class="nav-logo">
                 <a href="/print-store">
-                    <img src="{{asset('images/logo-eva-vn-c5.jpg')}}" alt="" class="logo">
+                    <img src="{{asset('images/logo-in-eva.jpg')}}" alt="" class="logo">
                 </a>
             </div>
 
@@ -15,7 +15,7 @@
             <div class="collapse-nav">
                 <a class="cart">
                     <i class="fas fa-shopping-bag"></i>
-                    <span class="count">5</span>
+                  <span class="count"> 0 </span>
                 </a>
 
                 <button class="btn-collapse" id="btnCollapseNav">
@@ -26,7 +26,7 @@
 
         <div class="nav-right">
             <a href="#">
-                <img src="{{asset('images/logo-eva-vn-c5.jpg')}}" class="logo-navbar-mobile" alt="">
+                <img src="{{asset('images/logo-in-eva.jpg')}}" class="logo-navbar-mobile" alt="">
             </a>
 
             <div class="nav-link">

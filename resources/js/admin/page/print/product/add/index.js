@@ -40,8 +40,8 @@ const PrintProductPanelAdd = () => {
     data.append('nameProduct', nameProduct);
     data.append('listPrice', JSON.stringify(listPriceProduct));
     data.append('sapo', sapoProduct);
-    data.append('description', description ? 'Thông tin mô tả chi tiết trống' : description);
-    data.append('information', information ? 'Thông tin thành phần sản phẩm trống' : information);
+    data.append('description', !description ? 'Thông tin mô tả chi tiết trống' : description);
+    data.append('information', !information ? 'Thông tin thành phần sản phẩm trống' : information);
     data.append('lengthListImage', listFileImage.length);
 
     //Add new product
