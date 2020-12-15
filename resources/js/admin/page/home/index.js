@@ -14,22 +14,27 @@ const LiveModel = {
 
 const OrderModel = {
   getData: (callback) => {
-    axios.get('/admin/order/get-data-live')
+    axios.get('/admin/print-store/order/get-all')
       .then(response => {
-        callback(response.data)
+        callback(response.data.data)
       });
   },
 };
 
 const Home = () => {
   const [dataLive, setDataLive] = useState([]);
-  const [dataListOrder, setDataListOrder] = useState([]);
+  const [dataListPrintStoreOrder, setDataListPrintStoreOrder] = useState([]);
+  const [dataItemPrintStoreOrderSelected, setDataItemPrintStoreOrderSelected] = useState(null);
 
   useEffect(() => {
-    LiveModel.getDataLive(result => {
-      setDataLive(result)
-    });
+    LiveModel.getDataLive(result => setDataLive(result));
+    OrderModel.getData(result => setDataListPrintStoreOrder(result))
   }, [])
+
+  const formatDate = (strDate) => {
+    let date = new Date(strDate);
+    return `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}-${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}-${date.getFullYear()}`;
+  };
 
   return (
     <div className="content-wrapper">
@@ -97,7 +102,7 @@ const Home = () => {
             <div className="col-md-12">
               <div className="card">
                 <div className="card-header border-transparent">
-                  <h3 className="card-title">Đơn hàng mới nhất</h3>
+                  <h3 className="card-title"><strong>In ấn</strong> - Đơn hàng mới nhất</h3>
 
                   <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse">
@@ -110,72 +115,46 @@ const Home = () => {
                 </div>
                 <div className="card-body p-0">
                   <div className="table-responsive">
-                    <table className="table m-0">
+                    <table className="table m-0 gridView-default">
                       <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Mục</th>
+                        <th>Tên khách hàng</th>
                         <th>Trạng thái</th>
+                        <th>Tổng hoá đơn</th>
                         <th>Ngày đặt</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span className="badge badge-success">Shipped</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>iPhone 6 Plus</td>
-                        <td><span className="badge badge-danger">Delivered</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span className="badge badge-info">Processing</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>iPhone 6 Plus</td>
-                        <td><span className="badge badge-danger">Delivered</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span className="badge badge-success">Shipped</span></td>
-                        <td>
-                          <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                      </tr>
+                      {dataListPrintStoreOrder.map((item, index) => (
+                        <tr key={index} data-toggle="modal" data-target="#modalDetailItemPrintStoreOrder"
+                            onClick={(event => {
+                              setDataItemPrintStoreOrderSelected(item);
+                            })}>
+                          <td>
+                            {item.id}
+                          </td>
+                          <td>
+                            {item.Order_FullNameUser}
+                          </td>
+                          <td>
+                            {item.Order_Status == 0 && (
+                              <small className="badge badge-danger">Chưa xem</small>
+                            )}
+                            {item.Order_Status == 1 && (
+                              <small className="badge badge-warning">Đã xem</small>
+                            )}
+                            {item.Order_Status == 2 && (
+                              <small className="badge badge-primary">Đã in hoá đơn</small>
+                            )}
+                            {item.Order_Status == 3 && (
+                              <small className="badge badge-success">Đã giao</small>
+                            )}
+                          </td>
+                          <td>{item.Order_ListProduct.countOrder}</td>
+                          <td>{formatDate(item.created_at)}</td>
+                        </tr>
+                      ))}
                       </tbody>
                     </table>
                   </div>
@@ -188,6 +167,125 @@ const Home = () => {
 
         </div>
       </section>
+
+
+      {dataItemPrintStoreOrderSelected && (
+        <div className="modal fade bd-example-modal-lg" id="modalDetailItemPrintStoreOrder" tabIndex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Hoá đơn Mã: {dataItemPrintStoreOrderSelected.id} của
+                  khách hàng {dataItemPrintStoreOrderSelected.Order_FullNameUser}</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div className="modal-body">
+                <section className="content">
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="callout callout-info">
+                          <h5><i className="fas fa-info"></i> Note:</h5>
+                          Trang này đã được cải tiến để in. Bấm vào nút in ở cuối hóa đơn để kiểm tra.
+                        </div>
+
+
+                        <div className="invoice p-3 mb-3" id="modalDetailItemPrintStoreOrder-toPrint">
+                          <div className="row">
+                            <div className="col-12">
+                              <h4>
+                                <i className="fas fa-globe"></i> Admin Eva VietNam.
+                                <small className="float-right">Ngày: {formatDate(new Date())}</small>
+                              </h4>
+                            </div>
+                          </div>
+                          <div className="row invoice-info">
+                            <div className="col-sm-8 invoice-col">
+                              Gửi đến
+                              <address>
+                                <strong>{dataItemPrintStoreOrderSelected.Order_FullNameUser}</strong><br/>
+                                <p>Địa Chỉ: {dataItemPrintStoreOrderSelected.Order_AddressUserSend}</p>
+                                <br/>
+                                Số điện thoại: {dataItemPrintStoreOrderSelected.Order_PhoneNumber}<br/>
+                                Email: {dataItemPrintStoreOrderSelected.Order_EmailUser}
+                              </address>
+                            </div>
+                            <div className="col-sm-4 invoice-col">
+                              <b>Mã đơn hàng: {dataItemPrintStoreOrderSelected.id}</b><br/>
+                              <br/>
+                              <b>Mã đơn hàng:</b> {dataItemPrintStoreOrderSelected.id}<br/>
+                              <b>Ngày gửi đơn:</b> {formatDate(dataItemPrintStoreOrderSelected.created_at)}<br/>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-12 table-responsive">
+                              <table className="table table-striped">
+                                <thead>
+                                <tr>
+                                  <th>STT</th>
+                                  <th>Sản phẩm</th>
+                                  <th>Mã sản phẩm</th>
+                                  <th>Tổng giá</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {dataItemPrintStoreOrderSelected.Order_ListProduct.listProduct.map((item, index) => (
+                                  <tr key={index + 1}>
+                                    <td>{index}</td>
+                                    <td>{item.dataProduct.PrintProduct_Name}</td>
+                                    <td>{item.dataProduct.id}</td>
+                                    <td>{item.priceSelect}</td>
+                                  </tr>
+                                ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary">
+                  <i className="far fa-eye"></i>
+                  Đánh dấu đã xem
+                </button>
+                <button type="button" className="btn btn-primary" onClick={() => {
+                  let mywindow = window.open('', 'PRINT');
+
+                  mywindow.document.write('<html>' +
+                    '<head><title>' + document.title + '</title>'
+                  );
+                  mywindow.document.write('</head><body >');
+                  mywindow.document.write('<h1>' + document.title + '</h1>');
+                  mywindow.document.write(document.getElementById('modalDetailItemPrintStoreOrder-toPrint').innerHTML);
+                  mywindow.document.write('</body></html>');
+
+                  mywindow.document.close(); // necessary for IE >= 10
+                  mywindow.focus(); // necessary for IE >= 10*/
+
+                  mywindow.print();
+                  mywindow.close();
+                }}>
+                  <i className="fas fa-print"></i>
+                  In Hoá đơn
+                </button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   )
 };

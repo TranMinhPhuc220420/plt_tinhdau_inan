@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderPrint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderPrintController extends Controller
 {
@@ -32,7 +33,33 @@ class OrderPrintController extends Controller
     echo json_encode(['status' => 200, 'message' => 'ok']);
   }
 
-  public function getAll(){
+  public function getAll()
+  {
+    $data = DB::table('order_prints')
+      ->orderBy('created_at', 'desc')
+      ->get();
 
+    for ($i = 0; $i < $data->count(); $i++) {
+      $listProductOrderRaw = json_decode($data[$i]->Order_ListProduct);
+      $listProductOrder = [
+        'countOrder' => 0,
+        'listProduct' => [],
+      ];
+
+      foreach ($listProductOrderRaw as $item) {
+        $itemProduct = DB::table('print_products')
+          ->select(
+            'id',
+            'PrintProduct_Name',
+          )->where('id', '=', $item->idProduct)->get()->first();
+
+        $listProductOrder['countOrder'] += $item->optionPrice;
+        array_push($listProductOrder['listProduct'], ['dataProduct' => $itemProduct, 'priceSelect' => $item->optionPrice]);
+      }
+
+      $data[$i]->Order_ListProduct = $listProductOrder;
+    }
+
+    echo json_encode(['data' => $data]);
   }
 }

@@ -1,3 +1,15 @@
 .content{
   min-height: 74vh;
 }
+
+table.gridView-default{
+  tbody{
+    tr{
+      cursor: pointer;
+      transition: 0.25s all;
+      &:hover{
+        background: #ddd;
+      }
+    }
+  }
+}
