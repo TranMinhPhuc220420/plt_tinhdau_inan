@@ -6,16 +6,16 @@
         <div id="carouselMain" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselMain" data-slide-to="0" class="active">
-                    <img src="{{ asset('images/first-slider-thumbnail-100x50.png') }}" alt="">
+                    <img src="{{ asset('images/welcome-first-slider-thumbnail.png') }}" alt="">
                 </li>
                 <li data-target="#carouselMain" data-slide-to="1">
-                    <img src="{{ asset('images/second-slider-thumbnail.png') }}" alt="">
+                    <img src="{{ asset('images/welcome-second-slider-thumbnail.png') }}" alt="">
                 </li>
             </ol>
 
             <div class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
-                    <img class="carousel-img" src="{{ asset('images/lulita.png') }}" alt="First slide">
+                    <img style="width: 600px;" class="carousel-img" src="{{ asset('images/banner-essential-oil.png') }}" alt="First slide">
                     <div class="carousel-caption d-md-block">
 
                         <div class="caption-top">
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="carousel-item carousel-link">
-                    <img class="carousel-img" src="{{ asset('images/panamericano.png') }}" alt="First slide">
+                    <img class="carousel-img" src="{{ asset('images/banner-print.png') }}" alt="First slide">
                     <div class="carousel-caption d-md-block">
 
                         <div class="caption-top">
@@ -47,7 +47,7 @@
 {{--                            <p class="price-discount">150.000 VNĐ</p>--}}
 {{--                            <p class="price">350.000 VNĐ</p>--}}
 
-                            <a href="./in-an" class="link">Đến cửa hàng</a>
+                            <a href="./print-store" class="link">Đến cửa hàng</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card text-left">
-                            <a href="./tinh-dau" class="card-body hyperlink">
+                            <a href="{{ url('/essential-oil') }}" class="card-body hyperlink">
                                 <img src="{{ asset('images/hyperlink-1.jpg') }}" alt="">
                                 <p class="card-text">TINH DẦU</p>
                             </a>
@@ -75,7 +75,7 @@
 
                     <div class="col-md-6">
                         <div class="card text-left">
-                            <a href="./in-an" class="card-body hyperlink">
+                            <a href="./print-store" class="card-body hyperlink">
                                 <img src="{{ asset('images/hyperlink-inan.jpg') }}" alt="">
                                 <p class="card-text">IN ẤN</p>
                             </a>

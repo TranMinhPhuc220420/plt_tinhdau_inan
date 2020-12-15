@@ -7,9 +7,22 @@
       <section class="latest-item">
         <div class="section-top">
           <div class="title-search">
-            <span>Cửa hàng @if ($isSearch) - {{ $categoryName }} @endif </span>
-            @if ($isSearch) <p>Kết quả tìm kiếm được dựa vào thể loại bạn đã chọn</p> @endif
-            @if (!$isSearch) <p> Tổng số lượng sản phẩm có trong cửa hàng hiện tại là {{ count($dataProduct) }} </p> @endif
+            <span>Cửa hàng
+              @if ($isSearch) -
+                @if ($searchBy == 'category')
+                  {{ $categoryName }}
+                @endif
+                @if ($searchBy == 'nameProduct')
+                  Kết quả tìm kiếm theo tên
+                @endif
+                @if ($searchBy == 'description')
+                  Kết quả tìm kiếm theo mô tả
+                @endif
+              @endif
+            </span>
+            @if ($isSearch) <p>Kết quả tìm kiếm được dựa vào từ khoá bạn đã nhập</p> @endif
+            @if (!$isSearch) <p> Tổng số lượng sản phẩm có trong cửa hàng hiện tại
+              là {{ count($dataProduct) }} </p> @endif
           </div>
 
           <!-- <div class="option-view">
@@ -28,13 +41,20 @@
                   <div class="card-body">
 
                     <div class="top">
-                      <h4 class="card-title product-name">{{ $item->EssentialOilProduct_Name }}</h4>
-                      <p class="card-text product-type">{{ $item->EssentialOilCategory_Name }}</p>
+                      <h4 class="card-title product-name">
+                        @if(strlen($item->EssentialOilProduct_Name) >= 45)
+                          {{ \Illuminate\Support\Str::limit($item->EssentialOilProduct_Name, 45, $end='...') }}
+                        @else
+                          {{$item->EssentialOilProduct_Name}}
+                        @endif
+                      </h4>
+                      <p href="#" class="card-text product-type">{{ $item->EssentialOilCategory_Name }}</p>
                     </div>
 
                     <div class="bottom">
                       <div class="price-column">
-                        <span class="price">{{ $item->EssentialOilProduct_Price }}</span>
+{{--                        <span class="price">{{ $item->EssentialOilProduct_Price }}</span>--}}
+                        <span class="price">{{ number_format( $item->EssentialOilProduct_Price, 0, ',', '.') }}</span>
                       </div>
 
                       <div class="add-to-cart-column">

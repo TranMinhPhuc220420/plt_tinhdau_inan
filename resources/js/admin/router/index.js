@@ -10,6 +10,10 @@ import EssentialOilProductPanelAdd from '../page/essentialOil/product/add';
 import EssentialOilProductPanelEdit from '../page/essentialOil/product/edit';
 import EssentialOilProduct from '../page/essentialOil/product';
 
+import PrintProduct from '../page/print/product';
+import PrintProductPanelAdd from '../page/print/product/add';
+import PrintProductPanelEdit from '../page/print/product/edit';
+
 const AppRouter = (props) => {
     return (
         <Switch>
@@ -20,6 +24,10 @@ const AppRouter = (props) => {
 
             <Route path="/admin/essential-oil/category-product" component={EssentialOilCategoryProduct} extra />
             <Route path="/admin/essential-oil/type-product" component={EssentialOilTypeProduct} extra />
+
+            <Route path="/admin/print-store/product" component={PrintProduct} extra />
+            <Route path="/admin/print-store/product-add" component={PrintProductPanelAdd} extra />
+            <Route path="/admin/print-store/product-edit" component={PrintProductPanelEdit} extra />
         </Switch>
     );
 }

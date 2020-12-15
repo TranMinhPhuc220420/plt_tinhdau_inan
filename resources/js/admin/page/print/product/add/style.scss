@@ -1,0 +1,20 @@
+#formAddNewProductEssentialOil {
+  .card-body {
+    .file-image {
+      .card-columns {
+        .card {
+          // overflow: hidden;
+          position: relative;
+
+          button.btn-remove {
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.25s all;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -44,25 +44,33 @@
           <div class="col-md-7">
             <div class="detail-info-oder">
 
-              <h4 class="product-name">{{ $data->EssentialOilProduct_Name }}</h4>
+              <h4 id="nameProduct" class="product-name">{{ $data->EssentialOilProduct_Name }}</h4>
               <p class="product-sapo"> {{ $data->EssentialOilProduct_Sapo }} </p>
 
               <p class="product-category">
-                Loại: <a href="#"
-                         class="category-link pos-re hv-lb"> {{ $data->EssentialOilCategory_Name }} </a>
+                Loại: <a href="
+                  {{ url('/essential-oil/shop/'.$data->FkEssentialOilCategory_id .'/'. implode('-', explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $data->EssentialOilCategory_Name)))).'/'. time() )}}
+                  " class="category-link pos-re hv-lb"> {{ $data->EssentialOilCategory_Name }} </a>
               </p>
 
               <div class="option-price">
-                <h4 class="price">{{$data->EssentialOilProduct_Price}} VNĐ</h4>
-                <h6 class="price-discount">{{$data->EssentialOilProduct_Discount}} VNĐ</h6>
+                <h4 class="price">{{ number_format( $data->EssentialOilProduct_Price, 0, ',', '.') }} VNĐ</h4>
+                @if($data->EssentialOilProduct_Discount != 0)
+                  <h6 class="price-discount">{{ number_format( $data->EssentialOilProduct_Discount, 0, ',', '.') }}
+                    VNĐ</h6>
+                @endif
               </div>
 
               <div class="options-oder">
-                <form>
+                <form action="/AreYouHacker? (-.-)" id="addCart" method="POST">
                   <div class="input-control">
-                    <button type="button" class="plus"> +</button>
-                    <input type="number" name="count" id="count-product" min="1" value="1">
-                    <button type="button" class="minus"> -</button>
+                    <button type="button" class="plus" id="btnPlusCount"> +</button>
+                    <input type="number" name="count" id="countProduct" min="1" value="1">
+                    <input type="hidden" name="priceProduct" id="priceProduct"  value="{{ $data->EssentialOilProduct_Price }}">
+                    <input type="hidden" name="discountProduct" id="discountProduct" value="{{ $data->EssentialOilProduct_Discount }}">
+                    <input type="hidden" name="idProduct" id="idProduct" value="{{ $idProduct }}">
+                    <input type="hidden" name="idImage" id="idImage" value="{{ $listImage[0]->idImage }}">
+                    <button type="button" class="minus" id="btnMinusCount"> -</button>
                   </div>
 
                   <button type="submit" class="btn-submit"> thêm vào giỏ hàng</button>
@@ -100,13 +108,59 @@
             {!! $data->EssentialOilProduct_Info !!}
           </div>
           <div class="tab-pane fade shadow" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <h4 class="title">Bình luận và đánh giá</h4>
-            <p class="description-more">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique
-              iusto
-              harum cupiditate? Aliquam
-              beatae animi et sint velit itaque incidunt repellendus ab atque nostrum vitae, quia odit
-              optio illum
-              dolor.</p>
+            <h4 class="title" style="border-bottom: 1px solid #ddd; width: 50%; padding-bottom: 5px">Bình luận và đánh
+              giá</h4>
+            <div class="row" id="listComment">
+              @foreach($dataComment as $item)
+                <div class="col-md-12">
+                  <div class="media g-mb-30 media-comment">
+                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                         src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
+                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                      <div class="g-mb-15">
+                        <h5 class="h5 g-color-gray-dark-v1 mb-0">{{ $item->Comment_Username }}</h5>
+                        <span class="g-color-gray-dark-v4 g-font-size-12">{{ $item->created_at}}</span>
+                      </div>
+
+                      <p>{{ $item->Comment_Content}}</p>
+
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            </div>
+
+            <form id="formPostNewComment" class="mt-5" action="./AreYouHacker?  (-.-) " method="POST">
+              @csrf
+              <input type="hidden" id="fuckingWowShit" value="{{ $idProduct }}">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="inputFullName">Họ và Tên</label>
+                    <input type="text" name="inputFullName" class="form-control" id="inputFullName"
+                           placeholder="Nhập họ tên..." required>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" name="inputEmail" class="form-control" id="inputEmail"
+                           aria-describedby="emailHelp"
+                           placeholder="Nhập email..." required>
+                    <small id="emailHelp" class="form-text text-muted">Chúng tôi sẽ không chia sẽ email này cho bất kỳ
+                      tổ
+                      chức nào</small>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="inputComment">Nhập phần bình buận của bạn: </label>
+                    <textarea name="inputComment" class="form-control" id="inputComment" rows="5" required></textarea>
+                  </div>
+                  <div class="form-group text-right">
+                    <button class="btn btn-primary" type="submit">Đăng Bình Luận</button>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </section>
@@ -134,13 +188,20 @@
                   <div class="card-body">
 
                     <div class="top">
-                      <h4 class="card-title product-name">{{ $item->EssentialOilProduct_Name }}</h4>
+                      <h4 class="card-title product-name">
+                        @if(strlen($item->EssentialOilProduct_Name) >= 45)
+                          {{ \Illuminate\Support\Str::limit($item->EssentialOilProduct_Name, 45, $end='...') }}
+                        @else
+                          {{$item->EssentialOilProduct_Name}}
+                        @endif
+                      </h4>
                       <p class="card-text product-type">{{ $data->EssentialOilCategory_Name }}</p>
                     </div>
 
                     <div class="bottom">
                       <div class="price-column">
-                        <span class="price">{{ $item->EssentialOilProduct_Price }} VNĐ</span>
+                        <span
+                          class="price">{{ number_format( $item->EssentialOilProduct_Price, 0, ',', '.') }} VNĐ</span>
                       </div>
 
                       <div class="add-to-cart-column">

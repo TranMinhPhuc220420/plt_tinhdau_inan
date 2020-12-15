@@ -14,7 +14,7 @@ class CreateEssentialOilProductsTable extends Migration
     public function up()
     {
         Schema::create('essential_oil_products', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedInteger('FkEssentialOilCategory_id');
             $table->string('EssentialOilProduct_Name');
             $table->string('EssentialOilProduct_Vote');

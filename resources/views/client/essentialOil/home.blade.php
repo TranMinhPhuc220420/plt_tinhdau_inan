@@ -6,16 +6,20 @@
     <div id="carouselMain" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselMain" data-slide-to="0" class="active">
-          <img src="{{ asset('images/first-slider-thumbnail-100x50.png') }}" alt="">
+          <img src="{{ asset('images/essential-oil-first-slider-thumbnail.png') }}" alt="">
         </li>
-        <li data-target="#carouselMain" data-slide-to="1">
-          <img src="{{ asset('images/second-slider-thumbnail.png') }}" alt="">
-        </li>
+
+        @if($dataProduct->count() != 0)
+          <li data-target="#carouselMain" data-slide-to="1">
+            <img src="{{ asset('images/essential-oil-product-new-not-define-second-slider-thumbnail.png') }}" alt="">
+          </li>
+        @endif
       </ol>
 
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active">
-          <img style="width: 600px;" class="carousel-img" src="{{ asset('images/test.png') }}" alt="First slide">
+          <img style="width: 600px;" class="carousel-img" src="{{ asset('images/banner-essential-oil.png') }}"
+               alt="First slide">
           <div class="carousel-caption d-md-block">
 
             <div class="caption-top">
@@ -28,21 +32,33 @@
           </div>
         </div>
 
-        @if($dataProduct[0])
+        @if($dataProduct->count() != 0)
           <div class="carousel-item carousel-link">
-            <img style="width: 450px;" class="carousel-img" src="{{ asset('images/test_2.png') }}" alt="First slide">
+            <img style="width: 450px;border-radius: 50%" class="carousel-img shadow"
+                 src="{{ asset('/storage/images/essential-oil/product/'. $dataProduct[0]->id .'/'. json_decode($dataProduct[0]->EssentialOilProduct_ListImage)[0]->idImage .'.png') }}"
+                 alt="First slide">
             <div class="carousel-caption d-md-block">
 
               <div class="caption-top">
-                <h3 class="product-name">{{ $dataProduct[0]->EssentialOilProduct_Name }}</h3>
+                <h3 class="product-name">
+                  @if(strlen($dataProduct[0]->EssentialOilProduct_Name) >= 50)
+                    {{ \Illuminate\Support\Str::limit($dataProduct[0]->EssentialOilProduct_Name, 50, $end='...') }}
+                  @else
+                    {{$dataProduct[0]->EssentialOilProduct_Name}}
+                  @endif
+                </h3>
                 <p class="product-type">{{ $dataProduct[0]->EssentialOilCategory_Name  }}</p>
               </div>
 
               <div class="caption-bottom">
-                <p class="price-discount">{{ $dataProduct[0]->EssentialOilProduct_Discount }} VNĐ</p>
-                <p class="price">{{ $dataProduct[0]->EssentialOilProduct_Price }} VNĐ</p>
+                <p class="price-discount">
+                  {{ number_format( $dataProduct[0]->EssentialOilProduct_Discount, 0, ',', '.') }}
+                  VNĐ</p>
+                <p class="price">
+                  {{ number_format( $dataProduct[0]->EssentialOilProduct_Price, 0, ',', '.') }}
+                  VNĐ</p>
 
-                <a href="/tinh-dau/detail/{{ $dataProduct[0]->id }}" class="link">shop now</a>
+                <a href="/essential-oil/detail/Với thiết kế kiểu dáng tinh tế sang trọng./Với thiết kế kiểu dáng tinh tế sang trọng. /{{ $dataProduct[0]->id }}/tét" class="link">shop now</a>
               </div>
             </div>
           </div>
@@ -64,7 +80,9 @@
           @foreach($dataCategory as $item)
             <div class="col-md-4 my-3">
               <div class="card text-left">
-                <a href="{{ url('tinh-dau/shop/'.$item->id .'/'. implode('-', explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $item->EssentialOilCategory_Name)))).'/'. time() )}}" class="card-body">
+                <a
+                  href="{{ url('/essential-oil/shop/'.$item->id .'/'. implode('-', explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $item->EssentialOilCategory_Name)))).'/'. time() )}}"
+                  class="card-body">
                   <img
                     src="{{ asset('storage/images/essential-oil/category/'. $item->id .'/'.$item->EssentialOilCategory_Image.'.png') }}"
                     alt="{{ $item->EssentialOilCategory_Name }}"/>
@@ -95,13 +113,21 @@
                   <div class="card-body">
 
                     <div class="top">
-                      <h4 class="card-title product-name">{{ $item->EssentialOilProduct_Name }}</h4>
+                      <h4 class="card-title product-name">
+                        @if(strlen($item->EssentialOilProduct_Name) >= 45)
+                          {{ \Illuminate\Support\Str::limit($item->EssentialOilProduct_Name, 45, $end='...') }}
+                        @else
+                          {{$item->EssentialOilProduct_Name}}
+                        @endif
+                      </h4>
                       <p class="card-text product-type">{{ $item->EssentialOilCategory_Name }}</p>
                     </div>
 
                     <div class="bottom">
                       <div class="price-column">
-                        <span class="price">{{ $item->EssentialOilProduct_Price }}</span>
+                        <span class="price">
+                          {{ number_format( $item->EssentialOilProduct_Price, 0, ',', '.') }}
+                        </span>
                       </div>
 
                       <div class="add-to-cart-column">
@@ -137,11 +163,20 @@
                            alt="Generic placeholder image">
                     </div>
                     <div class="media-body">
-                      <h5
-                        class="mt-0 mb-1 product-name">{{ \Illuminate\Support\Str::limit($item->EssentialOilProduct_Name, 20, $end='...') }}</h5>
-                      <p class="price">{{ $item->EssentialOilProduct_Price }} <span class="currency">VNĐ</span></p>
-                      <p class="price-discount">{{ $item->EssentialOilProduct_Discount }} <span
-                          class="currency">VNĐ</span></p>
+                      <h5 class="mt-0 mb-1 product-name">
+                        @if(strlen($item->EssentialOilProduct_Name) >= 30)
+                          {{ \Illuminate\Support\Str::limit($item->EssentialOilProduct_Name, 30, $end='...') }}
+                        @else
+                          {{$item->EssentialOilProduct_Name}}
+                        @endif
+                      </h5>
+                      <p class="price">
+                        {{ number_format( $item->EssentialOilProduct_Price, 0, ',', '.') }}
+                        <span class="currency">VNĐ</span></p>
+                      <p class="price-discount">
+                        {{ number_format( $item->EssentialOilProduct_Discount, 0, ',', '.') }}
+                        <span class="currency">VNĐ</span>
+                      </p>
                       <p class="start"><i class="fas fa-star"></i> {{ $item->EssentialOilProduct_Vote }} </p>
                     </div>
                   </li>
