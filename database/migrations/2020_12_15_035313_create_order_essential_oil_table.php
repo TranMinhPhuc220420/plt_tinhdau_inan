@@ -20,7 +20,7 @@ class CreateOrderEssentialOilTable extends Migration
       $table->string('Order_EmailUser')->default('');
       $table->string('Order_AddressUserSend');
       $table->string('Order_Note')->default('');
-      $table->json('Order_ListProductID');
+      $table->json('Order_ListProduct');
       $table->integer('Order_Watched')->default(0);;
       $table->integer('Order_Status')->default(0);;
       $table->timestamps();

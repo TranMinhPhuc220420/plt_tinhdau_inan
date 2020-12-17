@@ -14,6 +14,8 @@ import PrintProduct from '../page/print/product';
 import PrintProductPanelAdd from '../page/print/product/add';
 import PrintProductPanelEdit from '../page/print/product/edit';
 
+import SettingComponent from '../page/setting';
+
 const AppRouter = (props) => {
     return (
         <Switch>
@@ -28,6 +30,8 @@ const AppRouter = (props) => {
             <Route path="/admin/print-store/product" component={PrintProduct} extra />
             <Route path="/admin/print-store/product-add" component={PrintProductPanelAdd} extra />
             <Route path="/admin/print-store/product-edit" component={PrintProductPanelEdit} extra />
+
+            <Route path="/admin/setting" component={SettingComponent} extra />
         </Switch>
     );
 }

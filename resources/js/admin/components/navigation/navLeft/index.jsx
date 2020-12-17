@@ -49,7 +49,7 @@ const NavLeft = () => {
       <Link to="/admin/home" className="brand-link">
         <img src="/admin/image/41a2f8291637e769be26" alt="AdminLTE Logo"
           className="brand-image img-circle elevation-3" />
-        <span className="brand-text font-weight-light">AdminLTE 3</span>
+        <span className="brand-text font-weight-light">Eva Viet Nam</span>
       </Link>
 
       <div className="sidebar">
@@ -94,10 +94,10 @@ const NavLeft = () => {
             ))}
 
             <li className="nav-item">
-              <a href='#' className="nav-link">
-              <i className="fas fa-cog"></i>
-                <p>Cài đặt</p>
-              </a>
+              <Link to="/admin/setting" className="nav-link">
+                <i className="fas fa-cog"></i>
+                  <p>Cài đặt</p>
+              </Link>
             </li>
 
             <li className="nav-item">

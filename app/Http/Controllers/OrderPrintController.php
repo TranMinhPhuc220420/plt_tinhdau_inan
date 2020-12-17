@@ -62,4 +62,14 @@ class OrderPrintController extends Controller
 
     echo json_encode(['data' => $data]);
   }
+
+  public function updateStatus(Request $request)
+  {
+    $idOrder = $request->get('id');
+    $statusNow = $request->get('statusNow');
+
+    DB::table('order_prints')
+      ->where('id', '=', $idOrder)
+      ->update(['Order_Status' => ($statusNow + 1)]);
+  }
 }

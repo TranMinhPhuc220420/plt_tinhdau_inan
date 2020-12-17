@@ -1,35 +1,3 @@
-/*
-* More function
-* */
-if ($('#btnSearchNav')[0]) {
-  $('#btnSearchNav')[0].addEventListener('click', (event) => {
-
-    let input = $('#formSearch')[0].children[0];
-    let valueKeySearch = input.value.trim();
-    $('#btnSearchNav').toggleClass('active');
-    $('#formSearch').toggleClass('show');
-
-    if (valueKeySearch === '') {
-      event.preventDefault();
-    } else {
-
-    }
-  });
-}
-
-if ($('#btnCheckCart')[0]) {
-  $('#btnCheckCart')[0].addEventListener('click', (event) => {
-    $('#btnCheckCart').toggleClass('active');
-    $('#panelCheckCart').toggleClass('show');
-  });
-}
-
-if ($('#btnCollapseNav')[0]) {
-  $('#btnCollapseNav')[0].addEventListener('click', (event) => {
-    $('.navbar .nav-right').toggleClass('show');
-  });
-}
-
 /**
  * Add comment
  * @param str
@@ -312,14 +280,101 @@ const PrintStoreRemoveItemInCart = (idProduct) => {
   if (index != -1) {
     myCart.splice(index, 1);
     localStorage.setItem("myCartInPrintStore", JSON.stringify(myCart));
-    showListProductInCart();
+    PrintStoreShowListProductInCart();
     PrintStoreShowCart();
   }
-
-  PrintStoreShowCart();
 }
 
+/**
+ * Handler event hover banner
+ * @param event
+ * @returns {boolean}
+ */
+function handler(event) {
+  let x = event.pageX;
+  let y = event.pageY;
+  let isCarouselLink = false;
+
+  let element = document.getElementsByClassName('carousel-item');
+
+  for (let i = 0; i < element.length; i++) {
+    const elementSet = element[i];
+    elementSet.classList.forEach(item => {
+      if (item === 'carousel-link') {
+        isCarouselLink = true;
+      }
+    });
+
+    elementSet.children[0].style.top = x / 20 + 'px';
+    if (isCarouselLink) {
+      elementSet.children[0].style.right = y / 20 + 'px';
+    } else {
+      elementSet.children[0].style.left = y / 20 + 'px';
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Handler link product
+ * @param id
+ * @param name
+ */
+function test(id, name, isPrintStore) {
+  let date = new Date();
+
+  let dateHad = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
+  let nameHad = name.toLowerCase()
+    .normalize("NFD")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .replace(/\s+/g, "-")
+
+  if (isPrintStore) {
+    window.location.pathname = `print-store/detail/${Math.random()}/${dateHad}/${id}/${nameHad}`;
+  } else {
+    window.location.pathname = `essential-oil/detail/${Math.random()}/${dateHad}/${id}/${nameHad}`;
+  }
+}
+
+/*
+* Add event for element after loaded
+* */
 window.onload = () => {
+  /*
+* More function
+* */
+  if ($('#btnSearchNav')[0]) {
+    $('#btnSearchNav')[0].addEventListener('click', (event) => {
+
+      let input = $('#formSearch')[0].children[0];
+      let valueKeySearch = input.value.trim();
+      $('#btnSearchNav').toggleClass('active');
+      $('#formSearch').toggleClass('show');
+
+      if (valueKeySearch === '') {
+        event.preventDefault();
+      } else {
+
+      }
+    });
+  }
+
+  if ($('#btnCheckCart')[0]) {
+    $('#btnCheckCart')[0].addEventListener('click', (event) => {
+      $('#btnCheckCart').toggleClass('active');
+      $('#panelCheckCart').toggleClass('show');
+    });
+  }
+
+  if ($('#btnCollapseNav')[0]) {
+    $('#btnCollapseNav')[0].addEventListener('click', (event) => {
+      $('.navbar .nav-right').toggleClass('show');
+    });
+  }
+
   /**
    * Handler event hover banner
    * @param event
@@ -441,7 +496,7 @@ window.onload = () => {
             /*Show item product in cart to navbar*/
             PrintStoreShowCart();
             Swal.fire(
-              'Thên thành công',
+              'Thêm thành công',
               'Kiểm tra giỏ hàng của bạn xem nào!',
               'success'
             )
@@ -535,9 +590,9 @@ window.onload = () => {
                       title: 'Đặt hàng thành công',
                       text: `Chúng tôi sẽ liện hệ bạn ngay khi nhận đơn hàng này qua số điện thoại là ☎" ${phoneNumber}" nhé!`,
                     }).then(() => {
-                      localStorage.setItem("myCart", JSON.stringify([]));
-                      showCart();
+                      localStorage.setItem("myCartInPrintStore", JSON.stringify([]));
                       showListProductInCart();
+                      PrintStoreShowCart();
                     })
                   }
                 })
@@ -653,7 +708,7 @@ window.onload = () => {
         const inputOrderAddress = document.getElementById('inputOrderAddress');
         const inputOrderNote = document.getElementById('inputOrderNote');
         const myCart = JSON.parse(localStorage.getItem("myCart")).map(item => {
-          return {idProduct: item.idProduct}
+          return {idProduct: item.idProduct, count: item.countProduct}
         });
 
         if (myCart == null || myCart.length === 0) {
@@ -678,8 +733,8 @@ window.onload = () => {
               text: 'Thông tin bạn nhập còn thiếu!',
             })
           } else {
-              let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-              let vnEmail_regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/g;
+            let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            let vnEmail_regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/g;
 
             //Check data
             fullName.trim();
@@ -706,7 +761,7 @@ window.onload = () => {
                 email: email == '' || email ? 'Email trống' : email,
                 address: address,
                 note: note == '' || note ? 'Không có ghi chú' : note,
-                listIDProduct: JSON.stringify(myCart)
+                listProduct: JSON.stringify(myCart)
               }
               axios.post('/essential-oil/addOrder', data)
                 .then(response => {
@@ -727,59 +782,5 @@ window.onload = () => {
         }
       });
     }
-  }
-}
-
-/**
- * Handler event hover banner
- * @param event
- * @returns {boolean}
- */
-function handler(event) {
-  let x = event.pageX;
-  let y = event.pageY;
-  let isCarouselLink = false;
-
-  let element = document.getElementsByClassName('carousel-item');
-
-  for (let i = 0; i < element.length; i++) {
-    const elementSet = element[i];
-    elementSet.classList.forEach(item => {
-      if (item === 'carousel-link') {
-        isCarouselLink = true;
-      }
-    });
-
-    elementSet.children[0].style.top = x / 20 + 'px';
-    if (isCarouselLink) {
-      elementSet.children[0].style.right = y / 20 + 'px';
-    } else {
-      elementSet.children[0].style.left = y / 20 + 'px';
-    }
-  }
-
-  return false;
-}
-
-/**
- * Handler link product
- * @param id
- * @param name
- */
-function test(id, name, isPrintStore) {
-  let date = new Date();
-
-  let dateHad = `${date.getDate()}${date.getMonth()}${date.getFullYear()}`;
-  let nameHad = name.toLowerCase()
-    .normalize("NFD")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D")
-    .replace(/[^a-zA-Z0-9 ]/g, "")
-    .replace(/\s+/g, "-")
-
-  if (isPrintStore) {
-    window.location.pathname = `print-store/detail/${Math.random()}/${dateHad}/${id}/${nameHad}`;
-  } else {
-    window.location.pathname = `essential-oil/detail/${Math.random()}/${dateHad}/${id}/${nameHad}`;
   }
 }

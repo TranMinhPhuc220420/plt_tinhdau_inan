@@ -366,6 +366,8 @@ Route::prefix('/admin')->group(function () {
       return response()->file(Storage::path('public/images/' . $id_image . '.jpg'));
     });
 
+    Route::get('/profile/get-all', [AdminController::class, 'getProfile']);
+
     /*
      * Essential Oil
      */
@@ -408,7 +410,9 @@ Route::prefix('/admin')->group(function () {
      */
     /*------- For 'Order' -------*/
     Route::get('/print-store/order/get-all', [OrderPrintController::class, 'getAll'])->name('getAllOrder');
-
+    Route::post('/print-store/order/update-status', [OrderPrintController::class, 'updateStatus'])->name('UpdateStatusPrintStore');
+    Route::get('/essential-oil/order/get-all', [OrderEssentialOilController::class, 'getAll'])->name('getAllOrderInEssentialOil');
+    Route::post('/essential-oil/order/update-status', [OrderEssentialOilController::class, 'updateStatus'])->name('updateStatusOrderInEssentialOil');
   });
 });
 

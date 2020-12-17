@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -28,24 +29,24 @@ Route::prefix('/admin')->group(function () {
  * Router middleware for Admin
  * */
   Route::get('/home/get-data-live', function () {
-    $countProduct = \Illuminate\Support\Facades\DB::table('print_products')
+    $countProduct = DB::table('print_products')
       ->select()
       ->get()->count();
 
-    $countProduct += \Illuminate\Support\Facades\DB::table('essential_oil_products')
+    $countProduct += DB::table('essential_oil_products')
       ->select()
       ->get()->count();
 
-    $countOrder = \Illuminate\Support\Facades\DB::table('order_essential_oil')
+    $countOrder = DB::table('order_essential_oil')
       ->select()
       ->get()->count();
 
-    $countOrder += \Illuminate\Support\Facades\DB::table('order_prints')
+    $countOrder += DB::table('order_prints')
       ->select()
       ->get()->count();
 
     echo json_encode([
-      'userLive' => rand(5, 20),
+      'userLive' => rand(5, 10),
       'countFeedBack' => 0,
       'countProduct' => $countProduct,
       'countOrder' => $countOrder,

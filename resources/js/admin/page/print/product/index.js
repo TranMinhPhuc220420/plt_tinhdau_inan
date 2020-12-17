@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 /**
  * MODEL PRODUCT
@@ -259,6 +258,5 @@ const PrintProduct = () => {
     </div>
   );
 };
-
 
 export default PrintProduct;
