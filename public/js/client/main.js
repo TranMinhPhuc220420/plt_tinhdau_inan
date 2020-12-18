@@ -114,13 +114,17 @@ const showListProductInCart = () => {
         let totalOrder = 0;
         myCart.forEach((itemProduct, index) => {
           let newItem = document.createElement('tr');
-          let discountProduct = parseInt(itemProduct.discountProduct);
+          let priceDiscountProduct = parseInt(itemProduct.discountProduct);
           let priceProduct = parseInt(itemProduct.priceProduct);
-          let price = priceProduct;
+          let countProduct = parseInt(itemProduct.countProduct);
+          let priceTotalDisplay = 0;
+          let stylePriceProduct = '';
 
-          totalOrder += price;
-
-          let stylePriceProduct = discountProduct > 0 ? 'text-decoration: line-through' : '';
+          if (priceDiscountProduct > 0 && priceDiscountProduct < priceProduct){
+            priceTotalDisplay = priceDiscountProduct * countProduct;
+          }else{
+            priceTotalDisplay = priceProduct * countProduct;
+          }
 
           newItem.innerHTML = `
             <td>
@@ -136,9 +140,10 @@ const showListProductInCart = () => {
                 ${itemProduct.nameProduct.substring(0, 50)}...
               </a>
             </td>
-            <td style="${stylePriceProduct}">${itemProduct.priceProduct} VNĐ</td>
-            <td>${priceProduct} VNĐ</td>
-            <td>${price}</td>`;
+            <td style="${stylePriceProduct}">${priceProduct} VNĐ</td>
+            <td>${priceDiscountProduct} VNĐ</td>
+            <td>${countProduct}</td>
+            <td>${priceTotalDisplay} VNĐ</td>`;
 
           listProductCheckout.append(newItem);
         });
@@ -291,28 +296,29 @@ const PrintStoreRemoveItemInCart = (idProduct) => {
  * @returns {boolean}
  */
 function handler(event) {
-  let x = event.pageX;
-  let y = event.pageY;
-  let isCarouselLink = false;
+  if(document.body.offsetWidth > 992){
+    let x = event.pageX;
+    let y = event.pageY;
+    let isCarouselLink = false;
 
-  let element = document.getElementsByClassName('carousel-item');
+    let element = document.getElementsByClassName('carousel-item');
 
-  for (let i = 0; i < element.length; i++) {
-    const elementSet = element[i];
-    elementSet.classList.forEach(item => {
-      if (item === 'carousel-link') {
-        isCarouselLink = true;
+    for (let i = 0; i < element.length; i++) {
+      const elementSet = element[i];
+      elementSet.classList.forEach(item => {
+        if (item === 'carousel-link') {
+          isCarouselLink = true;
+        }
+      });
+
+      elementSet.children[0].style.top = x / 10 + 'px';
+      if (isCarouselLink) {
+        elementSet.children[0].style.right = y / 20 + 'px';
+      } else {
+        elementSet.children[0].style.left = y / 20 + 'px';
       }
-    });
-
-    elementSet.children[0].style.top = x / 20 + 'px';
-    if (isCarouselLink) {
-      elementSet.children[0].style.right = y / 20 + 'px';
-    } else {
-      elementSet.children[0].style.left = y / 20 + 'px';
     }
   }
-
   return false;
 }
 
@@ -342,7 +348,11 @@ function test(id, name, isPrintStore) {
 /*
 * Add event for element after loaded
 * */
-window.onload = () => {
+$(document).ready(function() {
+  //Remove loading page
+  document.getElementById('loader-wrapper').classList.remove('show');
+  document.getElementById('loader-wrapper').classList.add('hide');
+
   /*
 * More function
 * */
@@ -572,7 +582,7 @@ window.onload = () => {
                 title: 'Không đặt hành thành công',
                 text: 'Thông tin bạn nhập còn thiếu hoặc đã sai!',
               })
-            }else{
+            } else {
               //Create data to post
               const data = {
                 fullName: fullName,
@@ -753,7 +763,7 @@ window.onload = () => {
                 title: 'Không đặt hành thành công',
                 text: 'Thông tin bạn nhập còn thiếu hoặc đã sai!',
               })
-            }else{
+            } else {
               //Create data to post
               const data = {
                 fullName: fullName,
@@ -783,4 +793,4 @@ window.onload = () => {
       });
     }
   }
-}
+});

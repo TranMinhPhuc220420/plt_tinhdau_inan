@@ -9,13 +9,13 @@
             </div>
 
             <div class="name-business">
-                <a href="/essential-oil"><span class="text">eva vietnam</span></a>
+                <a href="/essential-oil"><span class="text">Tinh dầu Thủ Đức</span></a>
             </div>
 
             <div class="collapse-nav">
                 <a class="cart">
                     <i class="fas fa-shopping-bag"></i>
-                    <span class="count">5</span>
+                    <span class="count">0</span>
                 </a>
 
                 <button class="btn-collapse" id="btnCollapseNav">

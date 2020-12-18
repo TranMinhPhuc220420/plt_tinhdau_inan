@@ -79,20 +79,30 @@ const Home = () => {
     let date = new Date(strDate);
     return `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}-${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}-${date.getFullYear()}`;
   };
-  const notificationUpdateStatus = (result) => {
+  const notificationUpdateStatus = (result, statusNow) => {
+    let title = '', html = '', icon = 'success';
+
     if (result) {
-      Swal.fire(
-        'Đã xem!',
-        'Bạn đã đánh dấu đã xem',
-        'success'
-      );
+      switch (statusNow) {
+        case 0:
+          title = 'Đã xem!';
+          html = 'Bạn đã đánh dấu đã xem';
+          break;
+        case 1:
+          title = 'Đã in hoá đơn!';
+          html = 'Bạn đã đánh dấu đã in hoá đơn';
+          break;
+        case 2:
+          title = 'Đã giao hàng!';
+          html = 'Bạn đã đánh dấu đã giao hàng';
+      }
     } else {
-      Swal.fire(
-        'Lỗi ở máy chủ',
-        'Bạn không đánh dấu thành công ở đơn hàng này',
-        'success'
-      );
+      title = 'Lỗi ở máy chủ';
+      html = 'Bạn không đánh dấu thành công ở đơn hàng này';
+      icon = 'error';
     }
+
+    Swal.fire(title, html, icon);
   };
 
   return (
@@ -386,7 +396,7 @@ const Home = () => {
                     data.append('id', dataItemPrintStoreOrderSelected.id);
                     data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
                     OrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderPrintStore();
                     }));
                   }}>
@@ -399,7 +409,7 @@ const Home = () => {
                     data.append('id', dataItemPrintStoreOrderSelected.id);
                     data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
                     OrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderPrintStore();
                     }));
                   }}>
@@ -412,7 +422,7 @@ const Home = () => {
                     data.append('id', dataItemPrintStoreOrderSelected.id);
                     data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
                     OrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderPrintStore();
                     }));
                   }}>
@@ -448,14 +458,16 @@ const Home = () => {
       )}
 
       {dataItemEssentialOilOrderSelected && (
-        <div className="modal fade bd-example-modal-lg" id="modalDetailItemEssentialOilOrder" tabIndex="-1" role="dialog"
+        <div className="modal fade bd-example-modal-lg" id="modalDetailItemEssentialOilOrder" tabIndex="-1"
+             role="dialog"
              aria-labelledby="myLargeModalLabel"
              aria-hidden="true">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
 
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Hoá đơn Mã: {dataItemEssentialOilOrderSelected.id} của
+                <h5 className="modal-title" id="exampleModalLabel">Hoá đơn
+                  Mã: {dataItemEssentialOilOrderSelected.id} của
                   khách hàng {dataItemEssentialOilOrderSelected.Order_FullNameUser}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -543,7 +555,7 @@ const Home = () => {
                     data.append('id', dataItemEssentialOilOrderSelected.id);
                     data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
                     EssentialOilOrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderEssentialOil();
                     }));
                   }}>
@@ -556,7 +568,7 @@ const Home = () => {
                     data.append('id', dataItemEssentialOilOrderSelected.id);
                     data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
                     EssentialOilOrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderEssentialOil();
                     }));
                   }}>
@@ -569,7 +581,7 @@ const Home = () => {
                     data.append('id', dataItemEssentialOilOrderSelected.id);
                     data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
                     EssentialOilOrderModel.updateStatus(data, (result => {
-                      notificationUpdateStatus(result);
+                      notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
                       getDataOrderEssentialOil();
                     }));
                   }}>

@@ -13,6 +13,8 @@ $background-color-ogran-default: #ff4f40;
 $background-color-ogran-hover-default: #ff4231;
 
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Rubik:wght@300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+
 /*
 font-family: 'Rubik', sans-serif;
 font-family: 'Oswald', sans-serif;
@@ -61,6 +63,7 @@ ol {
   list-style: none;
   padding: 0;
   margin: 0;
+
   li {
     margin: 0;
     padding: 0;
@@ -70,6 +73,7 @@ ol {
 a {
   transition: 0.25s all;
 }
+
 a:hover {
   text-decoration: none;
 }
@@ -92,6 +96,7 @@ a:hover {
 // for navigation
 .navbar {
   height: 10rem;
+
   .nav-left,
   .nav-right {
     height: 100%;
@@ -99,6 +104,7 @@ a:hover {
     justify-content: center;
     align-items: center;
   }
+
   .nav-left {
     .nav-logo {
       img.logo {
@@ -129,11 +135,14 @@ a:hover {
     .nav-link {
       .list-link {
         display: flex;
+
         .item {
           padding: 0 10px;
           margin: 0 5px;
+
           a.link {
             color: $color-text-normal;
+
             &:hover {
               color: $color-text-normal-hover;
             }
@@ -158,6 +167,7 @@ a:hover {
             pointer-events: all;
           }
         }
+
         input[name="key"] {
           opacity: 0;
           bottom: -60px;
@@ -172,6 +182,7 @@ a:hover {
           right: 0;
           border-top: 3px solid $border-color-default;
           transition: 0.25s all;
+
           &:focus {
             border-top: 3px solid $background-color-default;
             outline: none;
@@ -253,12 +264,15 @@ a:hover {
             p {
               color: #333;
             }
+
             a.link {
               position: relative;
               color: #ff4f40;
+
               &.hv-lb::before {
                 background-color: #ff4f40;
               }
+
               &:hover.hv-lb::before {
                 width: 100%;
               }
@@ -275,6 +289,7 @@ a:hover {
                 transition: 0.25s all;
                 cursor: pointer;
                 height: 70px;
+
                 &:hover {
                   background-color: $background-color-item-default;
                 }
@@ -318,6 +333,7 @@ a:hover {
 
           .panel-footer {
             border-top: 1px solid $border-color-opacity-default;
+
             .panel-footer-body {
               padding: 10px 0;
               background-color: #fff;
@@ -359,9 +375,11 @@ a:hover {
               }
             }
           }
+
           .panel-footer.has {
             .panel-footer-body {
               background-color: #fff;
+
               .panel-btn {
                 display: inline-block;
                 width: 100%;
@@ -395,21 +413,25 @@ a:hover {
       }
     }
   }
+
   .carousel-inner {
     width: 100%;
-    height: 90vh;
+    height: 80vh;
     background-image: url(../../images/pattern.png);
 
     .carousel-item {
       opacity: 0;
       transition: 0.5s all;
+
       &.active {
         opacity: 1;
+
         .carousel-img {
           transform: translateY(0);
           transition: unset;
           opacity: 1;
         }
+
         .carousel-caption {
           .caption-top {
             .product-name,
@@ -418,6 +440,7 @@ a:hover {
               opacity: 1;
             }
           }
+
           .caption-bottom {
             .price-discount,
             .price {
@@ -432,17 +455,17 @@ a:hover {
         transition: 0.75s all;
         transform: translateY(-20%);
         opacity: 0.5;
-        width: 60vh;
-        left: 15%;
+        width: 600px;
+        left: 0;
         position: absolute;
       }
 
       .carousel-caption {
         position: absolute;
         bottom: -70vh;
-        right: 10%;
+        right: 5%;
         left: unset;
-        width: 45%;
+        width: 40%;
 
         .caption-top {
           .product-name,
@@ -454,6 +477,7 @@ a:hover {
             transition-timing-function: ease;
           }
         }
+
         .caption-bottom {
           .price-discount,
           .price {
@@ -471,6 +495,7 @@ a:hover {
             color: $color-text-normal;
             font-family: "Oswald", sans-serif;
           }
+
           .product-type {
             color: $color-text-opacity-normal;
             font-family: "Rubik", sans-serif;
@@ -480,6 +505,7 @@ a:hover {
 
         .caption-bottom {
           margin-top: 50px;
+
           .price-discount {
             color: $color-text-normal;
             transition-delay: 0.5s;
@@ -495,11 +521,14 @@ a:hover {
         }
       }
     }
+
     .carousel-item.carousel-link {
       .carousel-img {
         right: 0;
         left: unset;
+        width: 450px;
       }
+
       .carousel-caption {
         left: 0;
         right: unset;
@@ -512,6 +541,7 @@ a:hover {
             background-color: $background-color-ogran-default;
             transition: 0.25s all;
             padding: 5px 10px;
+
             &:hover {
               background-color: $background-color-ogran-hover-default;
             }
@@ -522,6 +552,10 @@ a:hover {
   }
 }
 
+#profile {
+  overflow: hidden;
+}
+
 #content {
   margin: 50px 0;
 
@@ -530,6 +564,7 @@ a:hover {
       .col-md-6 {
         .card {
           overflow: hidden;
+
           .card-body {
             padding: 0;
             height: 250px;
@@ -583,6 +618,7 @@ a:hover {
   section.product-type {
     .card {
       overflow: hidden;
+
       .card-body {
         padding: 0;
         height: 200px;
@@ -655,8 +691,10 @@ a:hover {
         border: 2px solid $color-text-normal-hover;
       }
     }
+
     .title-search {
       color: $border-color-default;
+
       span {
         color: $color-text-normal;
         font-size: 2rem;
@@ -680,6 +718,7 @@ a:hover {
               .product-name {
                 transform: translateY(-10px);
               }
+
               .product-type {
                 opacity: 1;
                 transform: translateY(-10px);
@@ -693,6 +732,7 @@ a:hover {
             }
           }
         }
+
         .card-img-top {
           transition: 0.5s all;
           height: 250px;
@@ -717,7 +757,7 @@ a:hover {
             }
 
             .product-name {
-              font-family: "Rubik", sans-serif;
+              font-family: 'Oswald', sans-serif;
             }
 
             .product-type {
@@ -740,11 +780,13 @@ a:hover {
               font-family: "Rubik", sans-serif;
               font-size: 1.2rem;
             }
+
             .add-to-cart-column {
               .btn-add-cart {
                 color: $color-text-normal;
                 transition: 0.25s all;
                 font-size: 1.5rem;
+
                 &:hover {
                   color: #ff4f40;
                 }
@@ -799,9 +841,11 @@ a:hover {
               }
             }
           }
+
           .img-inner {
             height: 100%;
             overflow: hidden;
+
             img {
               height: 100%;
               transition: 0.25s all;
@@ -824,14 +868,17 @@ a:hover {
             .price,
             .price-discount {
               margin: 0;
+
               .currency {
                 font-size: 7px;
               }
             }
+
             .price {
               font-size: 0.7em;
               text-decoration: line-through;
             }
+
             .price-discount {
               font-size: 0.8em;
               font-family: "Rubik", sans-serif;
@@ -850,6 +897,7 @@ a:hover {
 
   section.product-detail {
     margin-bottom: 150px;
+
     .detail-image {
       .carousel {
         .carousel-indicators {
@@ -873,7 +921,7 @@ a:hover {
         .carousel-inner {
           .carousel-item {
             img {
-              height: 700;
+              height: 400px;
               width: 100%;
             }
           }
@@ -894,7 +942,7 @@ a:hover {
       }
 
       .product-sapo {
-        font-family: "Rubik", sans-serif;
+        // font-family: "Rubik", sans-serif;
         font-size: 0.9em;
         color: $color-text-normal;
       }
@@ -919,9 +967,11 @@ a:hover {
 
       .option-price {
         margin: 10vh 0;
+
         .price {
           color: $background-color-ogran-default;
         }
+
         .price-discount {
           color: $color-text-normal;
           text-decoration: line-through;
@@ -935,6 +985,7 @@ a:hover {
           .input-control {
             width: 150px;
             position: relative;
+
             button.plus,
             button.minus {
               position: absolute;
@@ -951,9 +1002,11 @@ a:hover {
                 outline: none;
               }
             }
+
             button.plus {
               top: 0;
             }
+
             button.minus {
               bottom: 0;
             }
@@ -964,6 +1017,7 @@ a:hover {
                 -webkit-appearance: none;
                 margin: 0;
               }
+
               &:focus {
                 outline: none;
               }
@@ -983,9 +1037,11 @@ a:hover {
             border: none;
             text-transform: uppercase;
             transition: 0.25s all;
+
             &:hover {
               background: $background-color-ogran-hover-default;
             }
+
             &:focus {
               color: #fff;
               background: $background-color-ogran-hover-default;
@@ -1004,11 +1060,13 @@ a:hover {
 
       .nav-item {
         margin-right: 2px;
+
         a.nav-link {
           // border: none;
           background: #fff;
           font-size: 0.9em;
           color: $border-color-default;
+
           &.active {
             height: 110%;
           }
@@ -1026,6 +1084,7 @@ a:hover {
           font-family: "Rubik", sans-serif;
           font-size: 1.5em;
         }
+
         p.description-more {
           font-size: 0.8em;
         }
@@ -1129,23 +1188,28 @@ a:hover {
 
           td {
             vertical-align: inherit;
+
             a {
               color: $color-text-normal;
+
               &:hover {
                 &.hv-lb::before {
                   width: 100%;
                 }
               }
+
               i.fas {
                 opacity: 0;
                 transition: 0.25s all;
                 color: $background-color-ogran-default;
               }
+
               &.hv-lb::before {
                 background: $background-color-ogran-default;
                 height: 1px;
               }
             }
+
             img {
               width: 80px;
             }
@@ -1155,15 +1219,15 @@ a:hover {
     }
   }
 
-  section.information-order{
+  section.information-order {
     padding: 20px;
 
-    form{
-      .panel-default{
-        #collapse-shipping{
-          .panel-body{
+    form {
+      .panel-default {
+        #collapse-shipping {
+          .panel-body {
             table.table {
-              tr{
+              tr {
                 transition: 0.25s all;
               }
             }
@@ -1188,13 +1252,16 @@ footer {
 
   .footer-top {
     width: 100%;
+
     .list-contact {
       padding-left: 20px;
+
       .contact-item {
-        margin: 5px 0;
+        margin: 10px;
+
         a {
           color: $color-text-opacity-normal;
-
+          margin-left: 10px;
           .fa-map-marker,
           .fa-phone,
           .fa-envelope {
@@ -1208,6 +1275,7 @@ footer {
   .footer-bottom {
     margin-top: 25px;
     width: 100%;
+
     .link-social {
       border-top: 1px solid $color-text-opacity-normal;
       padding: 25px 0;
@@ -1240,6 +1308,7 @@ footer {
               transition: 0.25s all;
             }
           }
+
           a:hover {
             .fa-facebook {
               color: var(--blue);
@@ -1261,10 +1330,12 @@ footer {
         a {
           color: $border-color-default;
         }
+
         a.hv-lb::before {
           height: 1px;
           background: #ff4f40;
         }
+
         a:hover.hv-lb::before {
           width: 100%;
         }
@@ -1286,6 +1357,7 @@ footer {
   // nav
   .navbar {
     padding: 0;
+    height: 6rem;
 
     .nav-left {
       width: 100%;
@@ -1297,6 +1369,7 @@ footer {
 
       .collapse-nav {
         display: inline;
+
         .cart {
           position: relative;
           color: #333;
@@ -1327,6 +1400,7 @@ footer {
         }
       }
     }
+
     .nav-right {
       z-index: 9999;
       transition: 0.5s all;
@@ -1365,6 +1439,7 @@ footer {
       .nav-link {
         ul.list-link {
           flex-direction: column;
+
           .item.hv-lb:hover:before {
             width: 30%;
           }
@@ -1381,6 +1456,7 @@ footer {
             width: 80%;
             height: 40px;
           }
+
           input[name="key"] button.btn-submit {
             width: 30px;
             height: 40px;
@@ -1395,6 +1471,7 @@ footer {
       &.show {
         opacity: 1;
         left: 0;
+
         .mobile-menu-overlay {
           z-index: 149999;
           width: 20%;
@@ -1407,11 +1484,49 @@ footer {
 
   #carouselMain {
     .carousel-inner {
+      height: 70vh;
+
       .carousel-item {
-        .carousel-img {
-          width: 40vh;
-          left: 10%;
-          position: absolute;
+        &.carousel-item-normal {
+          .carousel-img {
+            width: 600px;
+            left: -20%;
+            position: absolute;
+          }
+
+          .carousel-caption {
+            padding: 50px 0;
+            border-radius: 50%;
+            // position: relative;
+
+            &:before {
+              // opacity: 0.9;
+              border-radius: 50%;
+              background-color: #fff;
+              box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+              content: "";
+              left: -20px;
+              top: 0;
+              width: 120%;
+              height: 100%;
+              position: absolute;
+            }
+          }
+        }
+
+        &.carousel-link {
+          .carousel-img {
+            right: -90px;
+          }
+          .carousel-caption {
+            left: 10px;
+
+            .caption-top {
+              .product-name {
+                font-size: 2rem;
+              }
+            }
+          }
         }
       }
     }
@@ -1446,32 +1561,119 @@ footer {
       }
     }
   }
+
+  #carouselMain {
+    .carousel-inner {
+      .carousel-item {
+        &.carousel-item-normal {
+          .carousel-img {
+            width: 600px;
+            left: -50px;
+            top: -80px;
+          }
+
+          .carousel-caption {
+            &:before {
+              opacity: 0.9;
+            }
+
+            bottom: -100vh;
+            width: 80%;
+            height: 90vh;
+
+            .caption-top {
+              position: absolute;
+              left: 55px;
+
+              .product-name {
+                padding: 0 10%;
+              }
+            }
+          }
+        }
+
+        &.carousel-link {
+          .carousel-caption {
+            top: -10px;
+            width: 50%;
+
+            .caption-top {
+              .product-name {
+              }
+            }
+            .caption-bottom {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 425px) {
   #carouselMain {
     .carousel-inner {
       .carousel-item {
+        height: 100%;
+
         .carousel-img {
-          width: 30vh;
-          left: -20%;
+          width: 500px;
+          top: 85px;
+          left: -80px;
           position: absolute;
         }
+
         .carousel-caption {
-          width: 50% !important;
+          top: 0;
           right: 0;
+          width: 100%;
+          height: 100%;
+          // opacity: 0.8;
+
+          &::before {
+            display: none;
+            opacity: unset;
+            border-radius: unset;
+          }
 
           .caption-top {
+            &::before {
+              position: absolute;
+              content: "";
+              width: 100%;
+              height: 100%;
+              background-color: #fff;
+              left: 0;
+              opacity: 0.95;
+            }
+
             .product-name {
               font-size: 2rem;
+            }
+
+            .product-type {
+              padding: 0 5px;
             }
           }
         }
       }
+
       .carousel-item.carousel-link {
         .carousel-img {
-          right: 0;
+          right: -40%;
           left: unset;
+          top: -20px;
+        }
+        .carousel-caption {
+          .caption-top {
+            &:before {
+              z-index: -1;
+            }
+            .product-name {
+              font-size: 1.5rem;
+            }
+          }
         }
       }
     }
@@ -1511,6 +1713,14 @@ footer {
           }
         }
       }
+
+      .tab-content .tab-pane h4.title {
+        width: 100% !important;
+      }
+
+      #profile {
+        overflow-x: scroll;
+      }
     }
   }
 }
@@ -1522,11 +1732,13 @@ footer {
     .nav-left {
       width: 100%;
       justify-content: space-between;
+
       .nav-logo {
         img {
           width: 45px !important;
         }
       }
+
       .name-business {
         font-size: 0.7em !important;
       }
@@ -1537,3 +1749,337 @@ footer {
     }
   }
 }
+
+
+/*
+ANIMATION LOADING PAGE
+*/
+/* 
+ _____   _           _         _                        _                  
+|_   _| | |         | |       | |                      | |                 
+  | |   | |__   __ _| |_ ___  | |_ ___  _ __ ___   __ _| |_ ___   ___  ___ 
+  | |   | '_ \ / _` | __/ _ \ | __/ _ \| '_ ` _ \ / _` | __/ _ \ / _ \/ __|
+ _| |_  | | | | (_| | ||  __/ | || (_) | | | | | | (_| | || (_) |  __/\__ \
+ \___/  |_| |_|\__,_|\__\___|  \__\___/|_| |_| |_|\__,_|\__\___/ \___||___/
+
+Oh nice, welcome to the stylesheet of dreams. 
+It has it all. Classes, ID's, comments...the whole lot:)
+Enjoy responsibly!
+@ihatetomatoes
+
+*/
+
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+
+   .chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+p {
+    line-height: 1.33em;
+    color: #7E7E7E;
+}
+
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    transition: 1s all;
+
+    &.hide{
+      opacity: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+    &.show{
+      opacity: 1;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+      pointer-events: all;
+    }
+}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #3498db;
+
+    -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+
+    #loader:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #e74c3c;
+
+        -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    }
+
+    #loader:after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #f9c922;
+
+        -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+          animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    }
+
+    @-webkit-keyframes spin {
+        0%   { 
+            -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+            -ms-transform: rotate(0deg);  /* IE 9 */
+            transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+        }
+        100% {
+            -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+            -ms-transform: rotate(360deg);  /* IE 9 */
+            transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+        }
+    }
+    @keyframes spin {
+        0%   { 
+            -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+            -ms-transform: rotate(0deg);  /* IE 9 */
+            transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+        }
+        100% {
+            -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+            -ms-transform: rotate(360deg);  /* IE 9 */
+            transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+        }
+    }
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* 
+	Ok so you have made it this far, that means you are very keen to on my code. 
+	Anyway I don't really mind it. This is a great way to learn so you actually doing the right thing:)
+	Follow me @ihatetomatoes
+*/

@@ -23,6 +23,9 @@
 
 </div>
 
+<div id="loader-wrapper" class="show">
+  <div id="loader"></div>
+</div>
 
 @include('client.essentialOil.layout.script')
 </body>

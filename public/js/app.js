@@ -41706,12 +41706,34 @@ var Home = function Home() {
     return "".concat(date.getDate() < 10 ? '0' + date.getDate() : date.getDate(), "-").concat(date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(), "-").concat(date.getFullYear());
   };
 
-  var notificationUpdateStatus = function notificationUpdateStatus(result) {
+  var notificationUpdateStatus = function notificationUpdateStatus(result, statusNow) {
+    var title = '',
+        html = '',
+        icon = 'success';
+
     if (result) {
-      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Đã xem!', 'Bạn đã đánh dấu đã xem', 'success');
+      switch (statusNow) {
+        case 0:
+          title = 'Đã xem!';
+          html = 'Bạn đã đánh dấu đã xem';
+          break;
+
+        case 1:
+          title = 'Đã in hoá đơn!';
+          html = 'Bạn đã đánh dấu đã in hoá đơn';
+          break;
+
+        case 2:
+          title = 'Đã giao hàng!';
+          html = 'Bạn đã đánh dấu đã giao hàng';
+      }
     } else {
-      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Lỗi ở máy chủ', 'Bạn không đánh dấu thành công ở đơn hàng này', 'success');
+      title = 'Lỗi ở máy chủ';
+      html = 'Bạn không đánh dấu thành công ở đơn hàng này';
+      icon = 'error';
     }
+
+    sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire(title, html, icon);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -41962,7 +41984,7 @@ var Home = function Home() {
       data.append('id', dataItemPrintStoreOrderSelected.id);
       data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
       OrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderPrintStore();
       });
     }
@@ -41976,7 +41998,7 @@ var Home = function Home() {
       data.append('id', dataItemPrintStoreOrderSelected.id);
       data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
       OrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderPrintStore();
       });
     }
@@ -41990,7 +42012,7 @@ var Home = function Home() {
       data.append('id', dataItemPrintStoreOrderSelected.id);
       data.append('statusNow', dataItemPrintStoreOrderSelected.Order_Status);
       OrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderPrintStore();
       });
     }
@@ -42093,7 +42115,7 @@ var Home = function Home() {
       data.append('id', dataItemEssentialOilOrderSelected.id);
       data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
       EssentialOilOrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderEssentialOil();
       });
     }
@@ -42107,7 +42129,7 @@ var Home = function Home() {
       data.append('id', dataItemEssentialOilOrderSelected.id);
       data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
       EssentialOilOrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderEssentialOil();
       });
     }
@@ -42121,7 +42143,7 @@ var Home = function Home() {
       data.append('id', dataItemEssentialOilOrderSelected.id);
       data.append('statusNow', dataItemEssentialOilOrderSelected.Order_Status);
       EssentialOilOrderModel.updateStatus(data, function (result) {
-        notificationUpdateStatus(result);
+        notificationUpdateStatus(result, dataItemPrintStoreOrderSelected.Order_Status);
         getDataOrderEssentialOil();
       });
     }
@@ -43665,8 +43687,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\www\work_home\plt-tinh-dau-app\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\www\work_home\plt-tinh-dau-app\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\www\work_home\plt_tinhdau_inan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\www\work_home\plt_tinhdau_inan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

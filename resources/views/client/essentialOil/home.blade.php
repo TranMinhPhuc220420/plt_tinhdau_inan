@@ -17,7 +17,7 @@
       </ol>
 
       <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active">
+        <div class="carousel-item carousel-item-normal active">
           <img style="width: 600px;" class="carousel-img" src="{{ asset('images/banner-essential-oil.png') }}"
                alt="First slide">
           <div class="carousel-caption d-md-block">

@@ -62,7 +62,7 @@ Route::prefix('/essential-oil')->group(function () {
       ->get();
 
     //Value set fast
-    $title = 'Trang chủ tinh dầu';
+    $title = 'Eva - tinh dầu Thủ Đức';
     return view('client.essentialOil.home')
       ->with(compact('dataCategory'))
       ->with(compact('dataProductDiscount'))
@@ -192,7 +192,8 @@ Route::prefix('/essential-oil')->group(function () {
   });
 
   Route::get('/cart/', function () {
-    return view('client.essentialOil.cart');
+    $title = 'Giỏ hàng của bạn';
+    return view('client.essentialOil.cart')->with(compact('title'));
   });
 
   Route::get('/search', function (Request $request) {
@@ -302,8 +303,9 @@ Route::prefix('/print-store')->group(function () {
       ->get();
 
     //Value set fast
-    $title = 'Trang chủ tinh dầu';
+    $title = 'Eva - In Thủ Đức';
     return view('client.printStore.home')
+      ->with(compact('title'))
       ->with(compact('dataProduct'));
   });
 
@@ -454,9 +456,24 @@ Route::prefix('/image/print-store/')->group(function () {
 });
 
 Route::get('/', function () {
-  return view('welcome');
+  $title = 'Trang chủ';
+
+  return view('welcome')->with(compact('title'));
 })->name('welcome');
 
 Route::get('/contact/', function () {
   return view('contact');
+});
+
+
+Route::get('/storage/images/essential-oil/category/{id_type}/{file_name}', function ($id_type, $file_name) {
+  return response()->file(Storage::path('public/images/essential-oil/category/' . $id_type . '/' . $id_type . '.png'));
+});
+
+Route::get('/storage/images/essential-oil/product/{id_product}/{id_image}', function ($id_product, $id_image) {
+  return response()->file(Storage::path('public/images/essential-oil/product/' . $id_product . '/' . $id_image));
+});
+
+Route::get('/storage/images/print-store/product/{id_product}/{id_image}', function ($id_product, $id_image) {
+  return response()->file(Storage::path('public/images/print-store/product/' . $id_product . '/' . $id_image));
 });

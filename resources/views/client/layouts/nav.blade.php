@@ -9,14 +9,14 @@
             </div>
 
             <div class="name-business">
-                <a href="/"><span class="text">eva vietnam</span></a>
+                <a href="/"><span class="text">Eva Việt Nam</span></a>
             </div>
 
             <div class="collapse-nav">
-                <a class="cart">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="count">5</span>
-                </a>
+{{--                <a href="{{ url('') }}" class="cart">--}}
+{{--                    <i class="fas fa-shopping-bag"></i>--}}
+{{--                    <span class="count">5</span>--}}
+{{--                </a>--}}
 
                 <button class="btn-collapse" id="btnCollapseNav">
                     <i class="fas fa-bars"></i>

@@ -54,10 +54,12 @@
               </p>
 
               <div class="option-price">
-                <h4 class="price">{{ number_format( $data->EssentialOilProduct_Price, 0, ',', '.') }} VNĐ</h4>
                 @if($data->EssentialOilProduct_Discount != 0)
-                  <h6 class="price-discount">{{ number_format( $data->EssentialOilProduct_Discount, 0, ',', '.') }}
-                    VNĐ</h6>
+                  <h4 class="price">{{ number_format( $data->EssentialOilProduct_Discount, 0, ',', '.') }} VNĐ</h4>
+                  <h6 class="price-discount">
+                    {{ number_format( $data->EssentialOilProduct_Price, 0, ',', '.') }} VNĐ</h6>
+                @else
+                  <h4 class="price">{{ number_format( $data->EssentialOilProduct_Price, 0, ',', '.') }} VNĐ</h4>
                 @endif
               </div>
 
@@ -66,8 +68,10 @@
                   <div class="input-control">
                     <button type="button" class="plus" id="btnPlusCount"> +</button>
                     <input type="number" name="count" id="countProduct" min="1" value="1">
-                    <input type="hidden" name="priceProduct" id="priceProduct"  value="{{ $data->EssentialOilProduct_Price }}">
-                    <input type="hidden" name="discountProduct" id="discountProduct" value="{{ $data->EssentialOilProduct_Discount }}">
+                    <input type="hidden" name="priceProduct" id="priceProduct"
+                           value="{{ $data->EssentialOilProduct_Price }}">
+                    <input type="hidden" name="discountProduct" id="discountProduct"
+                           value="{{ $data->EssentialOilProduct_Discount }}">
                     <input type="hidden" name="idProduct" id="idProduct" value="{{ $idProduct }}">
                     <input type="hidden" name="idImage" id="idImage" value="{{ $listImage[0]->idImage }}">
                     <button type="button" class="minus" id="btnMinusCount"> -</button>

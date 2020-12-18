@@ -46,7 +46,7 @@ Route::prefix('/admin')->group(function () {
       ->get()->count();
 
     echo json_encode([
-      'userLive' => rand(5, 10),
+      'userLive' => rand(0, 5),
       'countFeedBack' => 0,
       'countProduct' => $countProduct,
       'countOrder' => $countOrder,

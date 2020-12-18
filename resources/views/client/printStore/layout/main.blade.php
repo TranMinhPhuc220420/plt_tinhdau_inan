@@ -23,6 +23,9 @@
 
 </div>
 
+<div id="loader-wrapper" class="show">
+  <div id="loader"></div>
+</div>
 
 @include('client.printStore.layout.script')
 </body>

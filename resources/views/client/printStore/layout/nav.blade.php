@@ -9,7 +9,7 @@
             </div>
 
             <div class="name-business">
-                <a href="/print-store"><span class="text">eva vietnam</span></a>
+                <a href="/print-store"><span class="text">In Eva Thủ Đức</span></a>
             </div>
 
             <div class="collapse-nav">
@@ -68,7 +68,7 @@
                         <!-- cart-empty -->
                         <div class="panel-body empty" id="panelCartIsEmpty">
                             <p>Hiện chưa có sản phẩm nào</p>
-                            <a href="{{ url('/essential-oil/shop') }}" class="link hv-lb">Đi đến cửa hàng</a>
+{{--                            <a href="{{ url('/essential-oil/shop') }}" class="link hv-lb">Đi đến cửa hàng</a>--}}
                         </div>
 
                         <!-- cart-not-empty -->
