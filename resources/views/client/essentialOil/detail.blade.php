@@ -6,7 +6,7 @@
     <div class="container">
       <section class="product-detail">
         <div class="row">
-          <div class="col-md-5 detail-image">
+          <div class="col-md-5 detail-image"  data-aos="fade-left">
 
             <div id="carouselId" class="carousel slide" data-ride="carousel">
 
@@ -41,7 +41,7 @@
 
             </div>
           </div>
-          <div class="col-md-7">
+          <div class="col-md-7" data-aos="fade-right">
             <div class="detail-info-oder">
 
               <h4 id="nameProduct" class="product-name">{{ $data->EssentialOilProduct_Name }}</h4>
@@ -184,7 +184,7 @@
           <div class="row">
 
             @foreach($dataProductSem as $item)
-              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')">
+              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')" data-aos="fade-up">
                 <div class="card text-left">
                   <img class="card-img-top"
                        src="{{ asset('/storage/images/essential-oil/product/'. $item->id .'/'. json_decode($item->EssentialOilProduct_ListImage)[0]->idImage .'.png') }}"

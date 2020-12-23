@@ -15,14 +15,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-
 /*
  * Essential Old Router
  * */
 Route::prefix('/essential-oil')->group(function () {
   Route::get('/', function () {
-    session('userLive', 213);
-
     $dataProduct = DB::table('essential_oil_products')
       ->select([
         'essential_oil_products.id',
@@ -348,7 +345,6 @@ Route::prefix('/print-store')->group(function () {
   Route::post('/addOrder', [OrderPrintController::class, 'store'])->name('printStoreAddNewOrder');
 });
 
-
 /*
  * Admin Router
  * */
@@ -368,7 +364,9 @@ Route::prefix('/admin')->group(function () {
       return response()->file(Storage::path('public/images/' . $id_image . '.jpg'));
     });
 
+    Route::get('/setting', [AdminController::class, 'index']);
     Route::get('/profile/get-all', [AdminController::class, 'getProfile']);
+    Route::post('/profile/sub-update', [AdminController::class, 'updateProfile']);
 
     /*
      * Essential Oil
@@ -419,23 +417,6 @@ Route::prefix('/admin')->group(function () {
 });
 
 /*
- * Test Router
- * */
-Route::get('/test', function (Request $request) {
-  Session::put('key', 999999);
-  $test = Session::get('key');
-  echo $test;
-  Session::remove('key');
-  Session::put('key', 12312312);
-  $test = Session::get('key');
-  echo $test;
-});
-
-Route::post('/test-post', function (Request $request) {
-
-});
-
-/*
  * Public Router
  * */
 Route::prefix('/image/essential-oil/')->group(function () {
@@ -465,15 +446,34 @@ Route::get('/contact/', function () {
   return view('contact');
 });
 
+Route::prefix('/storage/images')->group(function () {
+  Route::get('/essential-oil/category/{id_type}/{file_name}', function ($id_type, $file_name) {
+    return response()->file(Storage::path('public/images/essential-oil/category/' . $id_type . '/' . $id_type . '.png'));
+  });
 
-Route::get('/storage/images/essential-oil/category/{id_type}/{file_name}', function ($id_type, $file_name) {
-  return response()->file(Storage::path('public/images/essential-oil/category/' . $id_type . '/' . $id_type . '.png'));
+  Route::get('/essential-oil/product/{id_product}/{id_image}', function ($id_product, $id_image) {
+    return response()->file(Storage::path('public/images/essential-oil/product/' . $id_product . '/' . $id_image));
+  });
+
+  Route::get('/print-store/product/{id_product}/{id_image}', function ($id_product, $id_image) {
+    return response()->file(Storage::path('public/images/print-store/product/' . $id_product . '/' . $id_image));
+  });
 });
 
-Route::get('/storage/images/essential-oil/product/{id_product}/{id_image}', function ($id_product, $id_image) {
-  return response()->file(Storage::path('public/images/essential-oil/product/' . $id_product . '/' . $id_image));
+
+/*
+ * Test Router
+ * */
+Route::get('/test', function (Request $request) {
+  Session::put('key', 999999);
+  $test = Session::get('key');
+  echo $test;
+  Session::remove('key');
+  Session::put('key', 12312312);
+  $test = Session::get('key');
+  echo $test;
 });
 
-Route::get('/storage/images/print-store/product/{id_product}/{id_image}', function ($id_product, $id_image) {
-  return response()->file(Storage::path('public/images/print-store/product/' . $id_product . '/' . $id_image));
+Route::post('/test-post', function (Request $request) {
+
 });

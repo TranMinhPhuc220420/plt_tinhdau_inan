@@ -13,9 +13,9 @@
             </div>
 
             <div class="collapse-nav">
-                <a class="cart">
+                <a class="cart" href="{{ url('/essential-oil/cart') }}">
                     <i class="fas fa-shopping-bag"></i>
-                    <span class="count">0</span>
+                    <span id="mobileCount" class="count">0</span>
                 </a>
 
                 <button class="btn-collapse" id="btnCollapseNav">
@@ -32,11 +32,11 @@
             <div class="nav-link">
                 <ul class="list-link">
                     <li class="item pos-re hv-lb">
-                        <a href="/essential-oil" class="link">Trang chủ</a>
+                        <a href="{{ url('/') }}" class="link">Trang chủ</a>
                     </li>
 
                     <li class="item pos-re hv-lb">
-                        <a href="/essential-oil/shop" class="link">Cửa hàng</a>
+                        <a href="{{ url('/essential-oil/shop') }}" class="link">Cửa hàng</a>
                     </li>
 
                     <li class="item pos-re hv-lb">

@@ -32,7 +32,7 @@
             <div class="nav-link">
                 <ul class="list-link">
                     <li class="item pos-re hv-lb">
-                        <a href="/" class="link">Trang chủ</a>
+                        <a href="{{ url('/') }}" class="link">Trang chủ</a>
                     </li>
 
 {{--                    <li class="item pos-re hv-lb">--}}

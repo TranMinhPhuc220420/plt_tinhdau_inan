@@ -25,7 +25,7 @@
             <div class="caption-top">
               <h3 class="product-name">In ấn Thủ Đức Việt Nam</h3>
               <p class="product-type">
-                Bao Bì Yến Phát với nhiều nằm kinh nghiệm cung cấp thiết kế in ấn các loại bao bì. Bao bì phục vụ doanh nghiệp, cửa hàng, bao bì đựng sản phẩm có logo và thiết kế.
+                Không lời nói hoa mỹ, không khoa trương càng không quảng cáo, pr. Chúng tôi dành chọn điều đó cho khách hàng đã trãi nghiệm dịch vụ tại Eva VietNam.
               </p>
             </div>
           </div>
@@ -86,7 +86,7 @@
         <div class="section-body">
           <div class="row">
             @foreach($dataProduct as $item)
-              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->PrintProduct_Name }}' , true)">
+              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->PrintProduct_Name }}' , true)" data-aos="fade-up">
                 <div class="card text-left">
                   <img class="card-img-top"
                        src="{{ asset('/storage/images/print-store/product/'. $item->id .'/'. json_decode($item->PrintProduct_ListImage)[0]->idImage .'.png') }}"

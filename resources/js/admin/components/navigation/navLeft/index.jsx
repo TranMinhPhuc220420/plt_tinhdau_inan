@@ -49,7 +49,7 @@ const NavLeft = () => {
       <Link to="/admin/home" className="brand-link">
         <img src="/admin/image/41a2f8291637e769be26" alt="AdminLTE Logo"
           className="brand-image img-circle elevation-3" />
-        <span className="brand-text font-weight-light">Eva Viet Nam</span>
+        <span className="brand-text font-weight-light">Eva Việt Nam</span>
       </Link>
 
       <div className="sidebar">

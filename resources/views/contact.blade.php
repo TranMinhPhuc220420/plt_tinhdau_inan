@@ -5,11 +5,6 @@
   <div id="content">
     <div class="container">
       <section class="contact">
-        {{--        <div class="section-top">--}}
-        {{--          <div class="title-search">--}}
-        {{--            <span>Địa chỉ cửa hàng</span>--}}
-        {{--          </div>--}}
-        {{--        </div>--}}
 
         <div class="section-body mt-5">
           <div class="row" style="font-size: 13px;">
@@ -17,28 +12,31 @@
             <div id="bodyLeft" class="col-sm-6">
               <h3 class="subtitle" style=" border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Địa chỉ cửa hàng</h3>
               <div class="row">
-                <div class="col-sm-4"><strong>PLT SOLUTIONS (Panda Laptop)</strong><br>
+                <div class="col-sm-5"><strong>Cty TNHH TM-DV EVA VIỆT NAM</strong><br>
                   <address>
-                    Vĩnh Phú 41, Quốc Lộ 13, Thuận An, Bình Dương
+                    163/34 Đặng Văn Bi, P.Trường Thọ, Thủ Đức, TP.Hồ Chí Minh
                   </address>
                 </div>
-                <div class="col-sm-4"><strong>Điện thoại</strong><br>
-                  0917208678
+                <div class="col-sm-3"><strong>Điện thoại</strong><br>
+                  <p>0389989499 (Tinh dầu)</p>
+                  <p>0931489629 (In ấn)</p>
                 </div>
                 <div class="col-sm-4"><strong>Email</strong><br>
-                  pltsolutions3010@gmail.com
+                  <p>saleinnhanhre@gmail.com</p>
+                  <p>thiepcuoieva@gmail.com</p>
+                  <p>tinhdauthuduc@gmail.com</p>
                 </div>
               </div>
               <div class="row">
                 <iframe width="100%" height="450" frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCNwNoMrcX-13gO_Aou-OjwyIwTfYt_qcg&amp;q=163,+34+Đặng+Văn+Bi,+Bình+Thọ,+Thủ+Đức,+Thành+phố+Hồ+Chí+Minh,+Vietnam"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCNwNoMrcX-13gO_Aou-OjwyIwTfYt_qcg&amp;q=195+Đặng+Văn+Bi,+Trường+Thọ,+Thủ+Đức,+Thành+phố+Hồ+Chí+Minh,+Vietnam"
                         allowfullscreen="">
                 </iframe>
               </div>
             </div>
-            <aside id="bodyRight" class="col-sm-6">
+            <aside id="bodyRight" class="col-sm-6 mt-3">
               <form method="POST" action="#" accept-charset="UTF-8" class="form-horizontal">
-                <fieldset>
+                <fieldset class="shadow" style="border: none">
                   <h3 class="subtitle" style=" border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Gửi tin nhắn cho
                     chúng tôi</h3>
                   <div class="form-group required">
@@ -58,7 +56,7 @@
                     <textarea class="form-control" name="Note" cols="50" rows="10"></textarea>
                   </div>
                 </fieldset>
-                <div class="buttons">
+                <div class="buttons mt-2">
                   <div class="pull-right" style="text-align: right">
                     <input class="btn btn-primary" type="submit" value="Gửi tin nhắn">
                   </div>

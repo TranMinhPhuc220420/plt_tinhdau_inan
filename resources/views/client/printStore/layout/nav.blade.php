@@ -3,19 +3,19 @@
     <div class="container">
         <div class="nav-left">
             <div class="nav-logo">
-                <a href="/print-store">
+                <a href="{{ url('/print-store') }}">
                     <img src="{{asset('images/logo-in-eva.jpg')}}" alt="" class="logo">
                 </a>
             </div>
 
             <div class="name-business">
-                <a href="/print-store"><span class="text">In Eva Thủ Đức</span></a>
+                <a href="{{ url('/print-store') }}"><span class="text">In Eva Thủ Đức</span></a>
             </div>
 
             <div class="collapse-nav">
-                <a class="cart">
+                <a class="cart" href="{{ url('/print-store/cart') }}">
                     <i class="fas fa-shopping-bag"></i>
-                  <span class="count"> 0 </span>
+                  <span class="count" id="mobileCount"> 0 </span>
                 </a>
 
                 <button class="btn-collapse" id="btnCollapseNav">
@@ -32,7 +32,7 @@
             <div class="nav-link">
                 <ul class="list-link">
                     <li class="item pos-re hv-lb">
-                        <a href="/print-store" class="link">Trang chủ</a>
+                        <a href="{{ url('/') }}" class="link">Trang chủ</a>
                     </li>
 
 {{--                    <li class="item pos-re hv-lb">--}}

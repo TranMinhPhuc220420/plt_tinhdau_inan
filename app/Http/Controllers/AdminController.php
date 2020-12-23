@@ -156,4 +156,21 @@ class AdminController extends Controller
 
     echo json_encode($data);
   }
+
+  public function updateProfile(Request $request)
+  {
+    $fullName = $request->get('fullName');
+    $username = $request->get('username');
+    $password = $request->get('password');
+
+    DB::table('users')
+      ->where('User_token', '=', $request->cookie('token'))
+      ->update([
+        'User_Username' => $username,
+        'User_FullName' => $fullName,
+        'User_Password' => Hash::make('123_zxc')
+      ]);
+
+    echo json_encode(['status' => 200, 'message' => 'ok']);
+  }
 }

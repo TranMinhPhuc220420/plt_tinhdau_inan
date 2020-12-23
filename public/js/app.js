@@ -43430,6 +43430,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -43444,9 +43446,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var UserModel = {
   getProfile: function getProfile(callback) {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/admin/profile/get-all').then(function (response) {
+      callback(response.data);
+    });
+  },
+  updateInfor: function updateInfor(data, callback) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/admin/profile/sub-update', data).then(function (response) {
       callback(response.data);
     });
   }
@@ -43457,6 +43465,26 @@ var SettingComponent = function SettingComponent() {
       _useState2 = _slicedToArray(_useState, 2),
       dataProfile = _useState2[0],
       setDataProfile = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      fullName = _useState4[0],
+      setFullName = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      username = _useState6[0],
+      setUsername = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      password = _useState8[0],
+      setPassword = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      rePassword = _useState10[0],
+      setRePassword = _useState10[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getDataProfile();
@@ -43471,6 +43499,44 @@ var SettingComponent = function SettingComponent() {
   var formatDate = function formatDate(strDate) {
     var date = new Date(strDate);
     return "".concat(date.getDate() < 10 ? '0' + date.getDate() : date.getDate(), "-").concat(date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(), "-").concat(date.getFullYear());
+  };
+
+  var actionChangeInfo = function actionChangeInfo(event) {
+    event.preventDefault(); //Check validate
+
+    var a = fullName.trim(),
+        b = username.trim(),
+        c = password.trim(),
+        d = rePassword.trim();
+
+    if (a === '' || b === '' || c === '' || d === '') {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+        icon: 'error',
+        title: 'Vui lòng nhập đầy đủ thông tin'
+      });
+    } else {
+      if (c != d) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+          icon: 'error',
+          title: 'Mật khẩu xác nhận không trùng khớp'
+        });
+      } else {
+        var data = {
+          'fullName': fullName,
+          'username': username,
+          'password': password
+        };
+        UserModel.updateInfor(data, function (result) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Cập nhật thông tin thàng công! 😉',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        });
+      }
+    }
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -43496,8 +43562,13 @@ var SettingComponent = function SettingComponent() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "card-title"
   }, "Th\xF4ng tin h\u1ED3 s\u01A1")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "group-information"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "ID: "), " ", dataProfile.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Email: "), " ", dataProfile.User_Email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Ng\xE0y t\u1EA1o: "), " ", formatDate(dataProfile.created_at), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Ng\xE0y c\u1EADp nh\u1EADt: "), " ", formatDate(dataProfile.updated_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "group-information",
+    style: {
+      padding: 10
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "ID: "), " ", dataProfile.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Email: "), " ", dataProfile.User_Email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Ng\xE0y t\u1EA1o: "), " ", formatDate(dataProfile.created_at), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Ng\xE0y c\u1EADp nh\u1EADt: "), " ", formatDate(dataProfile.updated_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: actionChangeInfo
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-body"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
@@ -43507,8 +43578,10 @@ var SettingComponent = function SettingComponent() {
     type: "text",
     className: "form-control",
     id: "FullName",
-    placeholder: "Nh\u1EADp h\u1ECD v\xE0 t\xEAn...",
-    value: dataProfile.User_FullName
+    placeholder: dataProfile.User_FullName,
+    onChange: function onChange(event) {
+      return setFullName(event.target.value);
+    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -43517,8 +43590,10 @@ var SettingComponent = function SettingComponent() {
     type: "text",
     className: "form-control",
     id: "Username",
-    placeholder: "Username...",
-    value: dataProfile.User_Username
+    placeholder: dataProfile.User_Username,
+    onChange: function onChange(event) {
+      return setUsername(event.target.value);
+    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -43527,6 +43602,9 @@ var SettingComponent = function SettingComponent() {
     type: "password",
     className: "form-control",
     id: "Password",
+    onChange: function onChange(event) {
+      return setPassword(event.target.value);
+    },
     placeholder: "Nh\u1EADp m\u1EADt kh\u1EA9u m\u1EDBi..."
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
@@ -43536,6 +43614,9 @@ var SettingComponent = function SettingComponent() {
     type: "password",
     className: "form-control",
     id: "RePassword",
+    onChange: function onChange(event) {
+      return setRePassword(event.target.value);
+    },
     placeholder: "Nh\u1EADp l\u1EA1i m\u1EADt kh\u1EA9u m\u1EDBi..."
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-footer text-right"

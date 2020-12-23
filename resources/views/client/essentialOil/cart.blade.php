@@ -23,7 +23,7 @@
         </table>
 
         <div class="total-price-order text-right" style="padding: 10px 20px">
-          <h5>Tổng hoá đơn: </h5><h4 id="totalOrder"></h4>
+          <h5>Tổng hoá đơn: </h5><h3 id="totalOrder"></h3>
         </div>
       </section>
 

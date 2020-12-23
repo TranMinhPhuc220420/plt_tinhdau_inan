@@ -27,6 +27,7 @@ const showCart = () => {
   const listProductInCart = document.getElementById('listProductInCart');
   const dockBtnCheckoutInCart = document.getElementById('dockBtnCheckoutInCart');
   const priceCountInCart = document.getElementById('priceCountInCart');
+  const mobileCount = document.getElementById('mobileCount');
 
 
   const myCart = JSON.parse(localStorage.getItem("myCart"));
@@ -37,6 +38,7 @@ const showCart = () => {
       listProductInCart.style.display = 'none';
       priceCountInCart.innerHTML = '0';
       countProductInCart.innerHTML = '0';
+      mobileCount.innerHTML = '0';
 
       panelCartIsEmpty.style.display = 'block';
     } else {
@@ -46,6 +48,7 @@ const showCart = () => {
       listProductInCart.style.display = 'block';
       listProductInCart.innerHTML = '';
       countProductInCart.innerHTML = myCart.length;
+      mobileCount.innerHTML = myCart.length;
 
       //Set display
       let countPrice = 0;
@@ -120,11 +123,13 @@ const showListProductInCart = () => {
           let priceTotalDisplay = 0;
           let stylePriceProduct = '';
 
-          if (priceDiscountProduct > 0 && priceDiscountProduct < priceProduct){
+          if (priceDiscountProduct > 0 && priceDiscountProduct < priceProduct) {
             priceTotalDisplay = priceDiscountProduct * countProduct;
-          }else{
+          } else {
             priceTotalDisplay = priceProduct * countProduct;
           }
+
+          totalOrder += priceTotalDisplay;
 
           newItem.innerHTML = `
             <td>
@@ -135,7 +140,7 @@ const showListProductInCart = () => {
             <td>
               <img src="/image/essential-oil/product/${itemProduct.idProduct}/${itemProduct.idImage}" alt="">
             </td>
-            <td>
+            <td class="col-name-product">
               <a class="category-link pos-re hv-lb" href="#">
                 ${itemProduct.nameProduct.substring(0, 50)}...
               </a>
@@ -169,6 +174,7 @@ const PrintStoreShowCart = () => {
   const listProductInCart = document.getElementById('listProductInCart');
   const dockBtnCheckoutInCart = document.getElementById('dockBtnCheckoutInCart');
   const priceCountInCart = document.getElementById('priceCountInCart');
+  const mobileCount = document.getElementById('mobileCount');
 
   const myCart = JSON.parse(localStorage.getItem("myCartInPrintStore"));
 
@@ -178,6 +184,7 @@ const PrintStoreShowCart = () => {
       listProductInCart.style.display = 'none';
       priceCountInCart.innerHTML = '0';
       countProductInCart.innerHTML = '0';
+      mobileCount.innerHTML = '0';
 
       panelCartIsEmpty.style.display = 'block';
     } else {
@@ -187,6 +194,7 @@ const PrintStoreShowCart = () => {
       listProductInCart.style.display = 'block';
       listProductInCart.innerHTML = '';
       countProductInCart.innerHTML = myCart.length;
+      mobileCount.innerHTML = myCart.length;
 
       //Set display
       let countPrice = 0;
@@ -253,7 +261,7 @@ const PrintStoreShowListProductInCart = () => {
               <img src="/image/print-store/product/${itemProduct.idProduct}/${itemProduct.idImage}" alt="">
             </td>
             <td>
-              <a class="category-link pos-re hv-lb" href="#">
+              <a class="category-link pos-re hv-lb col-name-product" href="#">
                 ${itemProduct.nameProduct.substring(0, 50)}...
               </a>
             </td>
@@ -296,7 +304,7 @@ const PrintStoreRemoveItemInCart = (idProduct) => {
  * @returns {boolean}
  */
 function handler(event) {
-  if(document.body.offsetWidth > 992){
+  if (document.body.offsetWidth > 992) {
     let x = event.pageX;
     let y = event.pageY;
     let isCarouselLink = false;
@@ -348,10 +356,12 @@ function test(id, name, isPrintStore) {
 /*
 * Add event for element after loaded
 * */
-$(document).ready(function() {
+$(document).ready(function () {
   //Remove loading page
-  document.getElementById('loader-wrapper').classList.remove('show');
-  document.getElementById('loader-wrapper').classList.add('hide');
+  setTimeout(() => {
+    document.getElementById('loader-wrapper').classList.remove('show');
+    document.getElementById('loader-wrapper').classList.add('hide');
+  }, 1000);
 
   /*
 * More function
@@ -381,7 +391,7 @@ $(document).ready(function() {
 
   if ($('#btnCollapseNav')[0]) {
     $('#btnCollapseNav')[0].addEventListener('click', (event) => {
-      $('.navbar .nav-right').toggleClass('show');
+      $('.navbar .nav-right').toggleClass(['show', 'shadow']);
     });
   }
 
@@ -696,11 +706,14 @@ $(document).ready(function() {
 
           /*Show item product in cart to navbar*/
           showCart();
-          Swal.fire(
-            'Good job!',
-            'You clicked the button!',
-            'success'
-          )
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Đã cho vào giỏ hàng',
+            // text: 'Kiểm tra giỏ hàng của bạn bằng các ấn vào icon giỏ hàng trên thanh menu',
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       });
     }
@@ -793,4 +806,10 @@ $(document).ready(function() {
       });
     }
   }
+
+  AOS.init({
+    offset: 200,
+    duration: 1000,
+    once: true,
+  });
 });

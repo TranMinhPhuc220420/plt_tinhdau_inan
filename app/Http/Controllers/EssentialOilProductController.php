@@ -64,7 +64,7 @@ class EssentialOilProductController extends Controller
                 'id' => $idProduct,
                 'FkEssentialOilCategory_id' => $categoryProduct,
                 'EssentialOilProduct_Name' => $nameProduct,
-                'EssentialOilProduct_Vote' => 0,
+                'EssentialOilProduct_Vote' => rand(3, 5),
                 'EssentialOilProduct_Sapo' => $sapoProduct,
                 'EssentialOilProduct_Description' => $description,
                 'EssentialOilProduct_Info' => $information,

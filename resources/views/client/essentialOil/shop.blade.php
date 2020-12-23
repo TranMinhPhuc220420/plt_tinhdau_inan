@@ -34,7 +34,7 @@
           <div class="row">
 
             @foreach($dataProduct as  $item)
-              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')">
+              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')"  data-aos="fade-up">
                 <div class="card text-left">
                   <img class="card-img-top"
                        src="{{ asset('/storage/images/essential-oil/product/'. $item->id .'/'. json_decode($item->EssentialOilProduct_ListImage)[0]->idImage .'.png') }}"/>

@@ -78,7 +78,7 @@
       <section class="product-type">
         <div class="row">
           @foreach($dataCategory as $item)
-            <div class="col-md-4 my-3">
+            <div class="col-md-4 my-3"  data-aos="zoom-in">
               <div class="card text-left">
                 <a
                   href="{{ url('/essential-oil/shop/'.$item->id .'/'. implode('-', explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $item->EssentialOilCategory_Name)))).'/'. time() )}}"
@@ -105,7 +105,7 @@
         <div class="section-body">
           <div class="row">
             @foreach($dataProduct as $item)
-              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')">
+              <div class="col-md-4 my-2" onclick="test({{$item->id}}, '{{ $item->EssentialOilProduct_Name }}')" data-aos="fade-up">
                 <div class="card text-left">
                   <img class="card-img-top"
                        src="{{ asset('/storage/images/essential-oil/product/'. $item->id .'/'. json_decode($item->EssentialOilProduct_ListImage)[0]->idImage .'.png') }}"
