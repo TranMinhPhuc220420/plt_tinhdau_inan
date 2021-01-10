@@ -37,6 +37,15 @@
             </li>
 
             <li class="contact-item">
+              <img src="{{ asset('/images/icon/zalo-icon.png') }}" style=" width: 25px; margin-left: 5px; margin-right: 15px; " alt="">
+              Zalo:
+              <a href="tel:0382886288">
+                0382886288
+              </a>
+              (NK Le)
+            </li>
+
+            <li class="contact-item">
               <div class="row">
                 <div class="col-md-4">
                   <a target="_blank" href="mailTo:saleinnhanhre@gmail.com">

@@ -87,7 +87,8 @@
                     src="{{ asset('storage/images/essential-oil/category/'. $item->id .'/'.$item->EssentialOilCategory_Image.'.png') }}"
                     alt="{{ $item->EssentialOilCategory_Name }}"/>
 
-                  <p class="card-text">{{ $item->EssentialOilCategory_Name }}
+                  <p class="card-text">
+                    <span>{{ $item->EssentialOilCategory_Name }}</span>
                   </p>
                 </a>
               </div>

@@ -71,7 +71,9 @@
             <div class="card text-left shadow-sm">
               <a href="{{ url('/essential-oil') }}" class="card-body hyperlink">
                 <img src="{{ asset('images/hyperlink-1.jpg') }}" alt="">
-                <p class="card-text">TINH DẦU</p>
+                <p class="card-text">
+                  <span>TINH DẦU</span>
+                </p>
               </a>
             </div>
           </div>
@@ -80,7 +82,9 @@
             <div class="card text-left shadow-sm">
               <a href="./print-store" class="card-body hyperlink">
                 <img src="{{ asset('images/hyperlink-inan.jpg') }}" alt="">
-                <p class="card-text">IN ẤN</p>
+                <p class="card-text">
+                  <span>IN ẤN</span>
+                </p>
               </a>
             </div>
           </div>
