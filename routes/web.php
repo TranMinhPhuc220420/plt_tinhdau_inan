@@ -93,7 +93,7 @@ Route::prefix('/essential-oil')->group(function () {
     //Value set fast
     $idProduct = $id;
     $listImage = json_decode($data->EssentialOilProduct_ListImage);
-    $title = 'Chi tiết sản phẩm';
+    $title = $data->EssentialOilProduct_Name;
 
     return view('client.essentialOil.detail')
       ->with(compact('data'))
@@ -330,7 +330,7 @@ Route::prefix('/print-store')->group(function () {
     $dataListPrice = json_decode($data->PrintProduct_ListPrice);
     $idProduct = $id;
     $listImage = json_decode($data->PrintProduct_ListImage);
-    $title = 'Chi tiết sản phẩm';
+    $title = $data->PrintProduct_Name;
 
     return view('client.printStore.detail')
       ->with(compact('data'))

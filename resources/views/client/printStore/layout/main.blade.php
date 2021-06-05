@@ -6,7 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title> @if(empty($title)) Title chưa được set @else {{ $title }} @endif </title>
-  <link rel="icon" href="{{ asset('/images/logo-in-eva.jpg') }}" type="image/icon type">
+  @if (!empty($listImage))
+    <meta property="og:image" content="{{ asset('/storage/images/print-store/product/'. $idProduct .'/'. $listImage[0]->idImage .'.png') }}">
+    <link rel="shortcut icon" href="{{ asset('/storage/images/print-store/product/'. $idProduct .'/'. $listImage[0]->idImage .'.png') }}" type="image/x-icon">
+  @else
+    <meta property="og:image" content="{{ asset('/images/logo.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('/images/logo.jpg') }}" type="image/x-icon">
+  @endif
+
+  <link rel="icon" href="{{ asset('/images/logo.jpg') }}" type="image/icon type">
 
   @include('client.printStore.layout.head')
 </head>
