@@ -83,6 +83,7 @@ Route::prefix('/essential-oil')->group(function () {
       ->orderBy('created_at', 'desc')
       ->where('essential_oil_products.FkEssentialOilCategory_id', '=', $data->FkEssentialOilCategory_id)
       ->where('essential_oil_products.id', '<>', $id)
+      ->limit(9)
       ->get();
 
     $dataComment = DB::table('comments')
@@ -317,6 +318,7 @@ Route::prefix('/print-store')->group(function () {
       ->select()
       ->where('id', '<>', $id)
       ->orderBy('created_at', 'desc')
+      ->limit(9)
       ->get();
 
     $dataComment = DB::table('comments')

@@ -361,7 +361,7 @@ $(document).ready(function () {
   setTimeout(() => {
     document.getElementById('loader-wrapper').classList.remove('show');
     document.getElementById('loader-wrapper').classList.add('hide');
-  }, 1000);
+  }, 200);
 
   /*
 * More function
